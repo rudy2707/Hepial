@@ -142,6 +142,9 @@ public class AnalyseurSemantique implements Visiteur {
         return null;
     }
 
+    public Object visiter(Ident i) {
+    }
+
     public Object visiter(Nombre n) {
         return null;
     }

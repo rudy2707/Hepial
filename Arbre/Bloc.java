@@ -23,17 +23,30 @@ import java.util.*;
 public class Bloc extends Instruction {
 		
 	private List<Instruction> instr;
-		
-	public Bloc (List<Instruction> instr, int lig) {
+
+	public Bloc (int lig) {
 		super(lig);
-		this.instr = instr;
+		this.instr = new ArrayList<Instruction>();
+	}
+
+	public Bloc (Instruction instr, int lig) {
+		super(lig);
+		this.instr.add(instr);
 	}	// Bloc
 	
 	public List<Instruction> instr() {
 		return this.instr;
 	}	
-	
+
+	public void add(Instruction i) {
+		this.instr.add(i);
+	}
+
+    public Object accepter(Visiteur v) {
+        return v.visiter(this);
+    }
+
 	public String toString() {
-		return ""+valeur;
+		return "Bloc";
 	}
 }
