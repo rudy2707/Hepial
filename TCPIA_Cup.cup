@@ -217,7 +217,11 @@ CORPS ::= INSTR
     //pileArbres.push(b);
 :}  | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
 
-INSTR ::= AFFECTATION | ECRIRE | LIRE | CONDITION | RETOUR | TANTQUE | POUR;
+INSTR ::= AFFECTATION | ECRIRE | LIRE | CONDITION
+{: 
+    System.out.println("NANANANANANAN");
+:}
+ | RETOUR | TANTQUE | POUR;
 
 LIRE ::= lire ident pointvirgule 
 {: 
