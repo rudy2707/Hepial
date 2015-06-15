@@ -217,7 +217,12 @@ AFFECTATION ::= ACCES affectation EXPR pointvirgule
 
 RETOUR ::= retourne EXPR pointvirgule;
 
-CONDITION ::= si EXPR alors CORPS sinon CORPS finsi;
+CONDITION ::= si EXPR alors CORPS:c1 sinon CORPS:c2 finsi
+{:  
+    Expression e = (Expression)pileArbres.pop();
+    Condition con = new Condition(c1.toString(), c2.toString(), e, 1);
+    pileArbres.push(con); 
+:};
 
 TANTQUE ::= tantque EXPR faire CORPS fintantque;
 
@@ -239,6 +244,9 @@ EXPR ::= EXPR OPEBIN:op EXPR
             break;
         case "-":
             pileArbres.push(new Soustraction(g, d, 1));
+            break;
+        case "==":
+            pileArbres.push(new Affectation((Idf)g, d, 1));
             break;
     }
 :}

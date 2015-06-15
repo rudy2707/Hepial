@@ -2,4 +2,4 @@
 ./Arbre/*.class
 ./Parser.java
 ./Lexer.java
-
+./sym.java

@@ -42,6 +42,7 @@ public interface Visiteur {
     Object visiter(Affectation a);
     Object visiter(Idf i);
     Object visiter(Ident i);
-    // TODO : Condition, Pour, Appel de fonction, Bloc, ...
+    Object visiter(Condition c);
+    // TODO : Pour, Appel de fonction, Bloc, ...
 
 }

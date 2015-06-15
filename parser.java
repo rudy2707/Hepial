@@ -876,6 +876,16 @@ class CUP$parser$actions {
           case 37: // CONDITION ::= si EXPR alors CORPS sinon CORPS finsi 
             {
               String RESULT =null;
+		int c1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int c1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		String c1 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int c2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int c2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String c2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		  
+    Expression e = (Expression)pileArbres.pop();
+    Condition con = new Condition(c1.toString(), c2.toString(), e, 1);
+    pileArbres.push(con); 
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CONDITION",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -921,6 +931,9 @@ class CUP$parser$actions {
             break;
         case "-":
             pileArbres.push(new Soustraction(g, d, 1));
+            break;
+        case "==":
+            pileArbres.push(new Affectation((Idf)g, d, 1));
             break;
     }
 
