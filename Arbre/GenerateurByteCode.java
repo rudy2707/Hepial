@@ -40,6 +40,7 @@ public class GenerateurByteCode implements Visiteur {
     }
 
     public void genereCode(ArbreAbstrait a) {
+        System.out.println("Byte : genereCode : " + a);
         a.accepter(this);
     }
 
@@ -50,16 +51,18 @@ public class GenerateurByteCode implements Visiteur {
     // Méthodes visiter() des différents éléments.
     // Nombre
     public Object visiter(Nombre n) {
+        System.out.println("Byte : Nombre : " + n);
         int valeur = n.valeur();
         if (valeur <= 5)
-            cible.append(" iconst_" + valeur);
+            cible.append(" iconst_" + valeur + "\n");
         else
-            cible.append(" bipush " + valeur);
+            cible.append(" bipush " + valeur + "\n");
         return null;
     }
 
     // Binaire
     public Object visiter(Binaire b) {
+        System.out.println("Byte : Binaire : " + b);
         b.gauche().accepter(this);
         b.droit().accepter(this);
         //cible.append(b.mnemonique());
@@ -68,6 +71,7 @@ public class GenerateurByteCode implements Visiteur {
 
     // Opérations
     public Object visiter(Addition a) {
+        System.out.println("Byte : Addition : " + a);
         a.gauche().accepter(this);
         a.droit().accepter(this);
         return null;
@@ -113,7 +117,7 @@ public class GenerateurByteCode implements Visiteur {
         // Code cible pour la source.
         a.source().accepter(this);
         // Code cible pour l'affectation.
-        cible.append(" istore ");
+        cible.append(" istore \n");
 
         return null;
     }
@@ -127,12 +131,35 @@ public class GenerateurByteCode implements Visiteur {
     }
 
     public Object visiter(Idf i) {
-        cible.append(" iload");
+        cible.append(" iload\n");
 
         return null;
     }
 
     public Object visiter(Bloc b) {
+        System.out.println("Byte : Bloc : " + b);
+
+		cible.append(".class public Main\n");
+		cible.append(".super java/lang/Object\n");
+
+		cible.append(".method public <init>()V\n");
+		cible.append("	aload_0\n");
+		cible.append("	invokespecial java/lang/Object/<init>()V\n");
+		cible.append("	return\n");
+		cible.append(".end method\n");
+
+		cible.append(".method public static main([Ljava/lang/String;)V\n");
+		cible.append("	.limit stack " + TDS.getInstance().bloc.size());
+        cible.append("\n");
+		cible.append("	.limit locals " + TDS.getInstance().bloc.size());
+        cible.append("\n");
+
+		//bloc.instructions().accept(this);
+        for (int i = 0; i < b.instr().size(); i++) {
+            b.instr().get(i).accepter(this);
+        }
+		cible.append("	return\n");
+		cible.append(".end method\n");
         return null;
     }
 

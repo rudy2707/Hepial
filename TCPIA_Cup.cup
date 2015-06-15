@@ -131,8 +131,10 @@ AXIOME ::= PROGRAMME {:
 
     System.out.println("Génération du Bytecode");
     GenerateurByteCode.getInstance().genereCode(root);
+    afficheArbre();
     String dstFileName = "outputBytecode.txt";
     BufferedWriter bw = new BufferedWriter(new FileWriter(dstFileName));
+    System.out.println("Cible : " + GenerateurByteCode.getInstance().getCible());
     bw.write(GenerateurByteCode.getInstance().getCible().toString());
     bw.close();
 	System.out.println("Done ("+dstFileName+")");

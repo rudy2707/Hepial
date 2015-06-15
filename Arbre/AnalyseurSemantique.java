@@ -109,40 +109,26 @@ public class AnalyseurSemantique implements Visiteur {
 
     private static String ncf = "Source et dest. non conforme !";
     public Object visiter(Affectation a) {
-        System.out.println("Debut Affectation sémantique");
         a.dest().accepter(this);    // Vérifie si l'identifiant destination est correct.
-        System.out.println("2");
         Type typeDest = a.dest().getType();
-        System.out.println("3");
-        //a.source().accepter(this);  // Vérifie si l'expression source est correct.
-        //Type tg = a.source().getType();
         Object v = a.source().accepter(Evaluateur.getInstance());
-        System.out.println("4");
 
         if (v != null)
             a.setSource(new Nombre((Integer)v, 1));
-        System.out.println("5");
 
         a.source().accepter(this);
-        System.out.println("6");
         Type typeSource = a.source().getType();
-        System.out.println("a");
-        System.out.println(a);
 
-        System.out.println(typeDest);
-        System.out.println(typeSource);
-        System.out.println("b");
+        System.out.println("Typedest : " + typeDest);
+        System.out.println("Typesource : " + typeSource);
 
         if (!(typeSource.estConforme(typeDest))) {
             // Erreur
             System.out.println("Error affectation sémantique");
             System.out.println(ncf);
-            System.out.println("8");
         }
         else {
-            System.out.println("9");
             a.setType(typeDest);
-            System.out.println("10");
         }
         return null;
     }
