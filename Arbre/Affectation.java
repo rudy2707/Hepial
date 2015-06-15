@@ -56,4 +56,8 @@ public class Affectation extends Instruction {
     	return "Affectation : " + dest + " = " + source;
     }
 
+    public Type getType() {
+        return this.type;
+    }
+
 }

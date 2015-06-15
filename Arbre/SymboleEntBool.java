@@ -44,6 +44,9 @@ public class SymboleEntBool extends Symbole {
             return "Booleen";
         else
             return "SymboleEntBool";
+    }
 
+    public Type getType() {
+        return this.type;
     }
 }

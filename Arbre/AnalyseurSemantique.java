@@ -149,23 +149,7 @@ public class AnalyseurSemantique implements Visiteur {
 
 
     public Object visiter(Idf i) {
-        System.out.println("Idf visiter");
-        System.out.println(i.getName());
-        Ident id = new Ident(i.getName());
-        System.out.println("id : " + id);
-        EntreeEntBool e = new EntreeEntBool(id);
-        System.out.println("e : " + e.ident());
-        Symbole s = TDS.getInstance().getSymbole(e);
-        System.out.println(s);
-
-
-        System.out.println("Affichage de TDS : ");
-        System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
-
-        for (Map.Entry entry : TDS.getInstance().bloc.entrySet()) {
-            System.out.println("Ident : " + entry.getKey() + " / Type : " + entry.getValue());
-        }
-
+        Symbole s = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(i.getName())));
         if (s == null) {    // Pas de type, erreur.
             System.out.println("Erreur, pas de type récupéré.");
         }

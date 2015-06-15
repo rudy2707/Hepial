@@ -21,8 +21,6 @@ package Arbre;
 import java.util.*;
 
 public class EntreeEntBool extends Entree {
-    // Identificateur de l'entrée.
-    private Ident ident;
 
     // Identificateur attaché à l'entrée.
     public EntreeEntBool(Ident ident) {
@@ -31,11 +29,19 @@ public class EntreeEntBool extends Entree {
     }
 
     public Ident ident() {
-        return this.ident;
+        return super.ident();
     }
 
     public String toString () {
-
-        return "EntreeEntBool " + this.ident;
+        return "EntreeEntBool : " + super.ident();
     }
+
+    //public boolean equals(Object other) {
+    //    if (!(other instanceof Entree))
+    //        return false;
+
+    //    EntreeEntBool e = (EntreeEntBool)other;
+
+    //    return e.ident().equals(this.ident());
+    //}
 }

@@ -27,9 +27,12 @@ public class Idf extends Expression {
 	public Idf(String nom, int lig) {
         super(lig);
 		this.nom = nom;
+        System.out.println(TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType());
+        this.type = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType();
 	}
 
     public Type getType() {
+        System.out.println("IDF Type : " + this.type);
         return this.type;
     }
 

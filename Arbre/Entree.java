@@ -19,7 +19,7 @@ package Arbre;
 
 import java.util.*;
 
-public abstract class Entree {
+public class Entree {
 
     // Identificateur de l'entrée.
     private Ident ident;
@@ -31,14 +31,26 @@ public abstract class Entree {
     }
 
     // Identificateur attaché à l'entrée.
-    public abstract Ident ident();
+    public Ident ident() {
+        return this.ident;
+    }
 
     // Utilisé pour l'affichage de la table des symboles.
     public String toString() {
-        //String s = "";
-        //s += this.ident;
-        //return s
-        //;
         return "" + this.ident;
     }
+
+    public boolean equals(Object o) {
+        if (!(o instanceof Entree))
+            return false;
+
+        Entree e = (Entree)o;
+
+        return e.ident().getName().equals(this.ident.getName());
+    }
+
+    public int hashCode() {
+        return this.ident.getName().hashCode();
+    }
+
 }

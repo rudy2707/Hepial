@@ -32,4 +32,6 @@ public abstract class Symbole {
     // Ligne dans le texte.
     public abstract int ligne();
 
+    public abstract Type getType();
+
 }

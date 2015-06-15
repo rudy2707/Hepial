@@ -68,10 +68,32 @@ public class TDS {
      *  Identification d'une entrée.
      */
     public Symbole identifier(Entree e) {
-        return this.bloc.get(e);
+        //for (Map.Entry entry : this.bloc.entrySet()) {
+        //    String s = (Entree)entry.getKey().ident();
+        //    String s2 = e.ident();
+        //    if (s.equals(s2)) {
+        //        System.out.println("FOUND");
+        //        return (Symbole)entry.getValue();
+        //    }
+        //}
+        return null;
+        //return this.bloc.get(e);
     }
 
     public Symbole getSymbole(Entree e) {
+        System.out.println("Affichage de TDS : ");
+        System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
+
+        for (Map.Entry entry : TDS.getInstance().bloc.entrySet()) {
+            System.out.println("Ident : " + entry.getKey() + " / Type : " + entry.getValue());
+            Entree n = (Entree)entry.getKey();
+            System.out.println("e 2 :" + n);
+            Symbole s = (Symbole)entry.getValue();
+            System.out.println("s 2 :" + s);
+        }
+        System.out.println("e tds :" + e);
+        System.out.println("e tds :" + e.ident());
+        System.out.println("e tds :" + bloc.containsKey(e));
         return bloc.get(e);
     }
 
