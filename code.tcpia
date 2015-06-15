@@ -1,0 +1,15 @@
+programme test;
+
+entier d;
+entier b;
+entier c;
+
+debut prg;
+
+d = 2;
+b = 3;
+
+c = d + b;
+
+fin prg;
+

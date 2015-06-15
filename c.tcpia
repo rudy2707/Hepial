@@ -1,0 +1,12 @@
+programme test ;
+
+booleen r;
+entier test2;
+entier ab;
+
+debutprg
+
+test2 = ab ;
+ab = 4;
+
+finprg

@@ -1,0 +1,20 @@
+programme test ;
+
+booleen toto;
+booleen tata, tintin;
+entier titi;
+
+debutprg
+
+test2 = ab ;
+ab = 4;
+lire ab ;
+ecrire ab[ab];
+
+si ab == 3 alors
+ test2 = 4;
+sinon
+ test2 = 1;
+finsi
+
+finprg

@@ -1,0 +1,292 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  TCPIA_Cup.cup
+ *
+ *    Description:  Cup file for the TCPIA compilator.
+ *
+ *        Version:  1.0
+ *        Created:  3/24/2015 07:26:20 PM
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  Axel Fahy, Rudolf Höhn
+ *   Organization:  HES-SO hepia section ITI
+ *
+ * =====================================================================================
+ */
+
+import java_cup.runtime.*;
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+import Arbre.*;
+
+parser code {:
+
+    //public void syntax_error(Symbol s) {
+    //    System.err.println("Compiler has detected a syntax error at line " + s.left + " column " + s.right);
+    //}
+
+    public Stack<ArbreAbstrait> pileArbres = new Stack<ArbreAbstrait>();
+
+    public TDS tds = TDS.getInstance();
+
+    public Type lastType;  // Dernier type récupéré.
+
+    public void afficheTDS() {
+        System.out.println("Affichage de TDS : ");
+        System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
+
+        for (Map.Entry entry : TDS.getInstance().bloc.entrySet()) {
+            System.out.println("Ident : " + entry.getKey() + " / Type : " + entry.getValue());
+        }
+    }
+
+    // TODO : Pourquoi est-ce que la table des symboles à des entrées nulles ???
+
+    public void afficheArbre() {
+        System.out.println("Affichage de l'arbre : ");
+        System.out.println("Taille de la pile de l'arbre : " + pileArbres.size());
+        for (int i = pileArbres.size() - 1; i >= 0; i--) {
+            System.out.println(pileArbres.get(i));
+        }
+    }
+
+:};
+
+// Terminaux
+terminal String programme, debutprg, finprg, debutfonc, finfonc, retourne; 
+
+// Type
+terminal TypeEntier entier;
+terminal TypeBooleen bool;
+
+// Instruction
+terminal Affectation affectation;
+
+// Arithmétiques
+terminal String plus;
+terminal String moins;
+terminal String mult;
+terminal String div;
+
+// Relation
+terminal String different;
+terminal String doubleegal;
+terminal String pluspetitegal;
+terminal String pluspetit;
+terminal String plusgrandegal;
+terminal String plusgrand;
+
+// Expression
+terminal String ident;
+terminal Nombre nombre;
+
+// Pas encore utilisés
+terminal String lire, ecrire;
+terminal String et, ou;
+terminal String parentouvrante, parentfermante;
+terminal String crochetouvrant, crochetfermant;
+terminal String constante, constanteent, constantechaine, vrai, faux;
+terminal String comment, virgule, pointvirgule, deuxpoints, moinsunaire, no;
+terminal String si, alors, sinon, finsi;
+terminal String pour, allantde, a, faire, finpour;
+terminal String tantque, fintantque;
+//terminal String opebin;
+
+// Non terminaux
+non terminal String AXIOME, ENTETE, PROGRAMME, PAREFF;
+non terminal String DECLA, DECLAVAR, DECLACONST, DECLAFONCT, APPELFCT;
+non terminal Type TYPE, TYPEBASE;
+non terminal ArrayList<String> LIDENT; 
+non terminal String TABLEAU, DIM, PARAM, CORPS, INSTR, LIRE, ECRIRE;
+non terminal String AFFECTATION, RETOUR, CONDITION, TANTQUE, POUR, EXPR, ACCES, INDEX;
+non terminal String OPERANDE, OPEUN;
+non terminal String OPEBIN;
+
+precedence left plus, moins, mult, div, et, ou;
+precedence left different, doubleegal, pluspetitegal, pluspetit, plusgrandegal, plusgrand;
+
+AXIOME ::= PROGRAMME {:
+    
+    System.out.println("Pile status : " + pileArbres.size());
+    /* 
+       TODO : Faire la génération du bytecode.
+       Appeler la classe BytecodeGenerateur et lancer la création du code.
+       Le texte doit être écrit dans un bufferwrite pour pouvoir être 
+       créer du bytecode avec jasmin (makefile)
+    */
+    System.out.println("Table des symboles");
+    afficheTDS();
+    System.out.println("Arbre abstrait");
+    afficheArbre();
+
+    //System.out.println("Analyse sémantique");
+    
+    //AnalyseurSemantique.analyse(pilesArbres.peek());
+    
+    
+    :};
+
+PROGRAMME ::= ENTETE DECLA debutprg CORPS finprg {:
+    System.out.println("FIN");
+    System.out.println("Pile status : " + pileArbres.size());
+:};
+
+ENTETE ::= programme ident pointvirgule;
+
+DECLA ::=  DECLA DECLAVAR
+        |  DECLA DECLACONST
+        |  DECLA DECLAFONCT
+        |
+;
+
+DECLAVAR ::= TYPE:type LIDENT:list pointvirgule
+{: 
+    // Ajout des variables dans la table des symboles.
+    for (String id : list) {
+        System.out.println("id : " + id);
+        Ident i = new Ident(id);            // Création du nouvel identifiant.
+        Entree e = new EntreeEntBool(i);    // Ajout d'une entrée.
+        Symbole s = new SymboleEntBool(2, lastType);
+
+        System.out.println("i : " + id);
+        System.out.println("Lasttype : " + lastType);
+
+        tds.getInstance().ajouter(e, s);
+    }
+:};
+
+LIDENT ::= ident:id
+    {: 
+        // Si on est au dernier ident, création de l'ArrayList.
+        RESULT = new ArrayList<String>();
+        RESULT.add(id);
+    :}
+        | ident:id virgule LIDENT:listID
+    {:
+        // Ajout des valeurs dans l'ArrayList.
+        RESULT = listID;
+        RESULT.add(id);
+    :}
+;
+
+DECLACONST ::= constante TYPE ident affectation EXPR pointvirgule
+;
+
+// Il faut changer de bloc 
+DECLAFONCT ::= TYPE ident parentouvrante PARAM parentfermante DECLA debutfonc CORPS finfonc
+	    | TYPE ident parentouvrante parentfermante DECLA debutfonc CORPS finfonc
+;
+
+TYPE ::= TYPEBASE | TABLEAU;
+
+TYPEBASE ::= entier {: lastType = TypeEntier.getInstance(); :}
+            | bool  {: lastType = TypeBooleen.getInstance(); :};
+
+TABLEAU ::= TYPEBASE crochetouvrant DIM crochetfermant;
+
+DIM ::= EXPR deuxpoints EXPR 
+		| DIM virgule EXPR deuxpoints EXPR
+;
+
+PARAM ::= TYPE ident | PARAM virgule TYPE ident;
+
+CORPS ::= INSTR | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
+
+INSTR ::= AFFECTATION | ECRIRE | LIRE | CONDITION | RETOUR | TANTQUE | POUR;
+
+LIRE ::= lire ident pointvirgule;
+
+ECRIRE ::= ecrire EXPR pointvirgule
+	    | ecrire constantechaine pointvirgule
+;
+
+AFFECTATION ::= ACCES affectation EXPR pointvirgule
+{:
+    System.out.println("Affectation : ");
+    // Dépiler l'expression.
+    Expression source = (Expression) (pileArbres.pop());
+    // Dépiler l'indentifiant (ACCES).
+    Idf dest = (Idf)(pileArbres.pop());
+    // Rempiler l'affectation.
+    pileArbres.push(new Affectation(dest, source, 1));
+    System.out.println("Pile status : " + pileArbres.size());
+:};
+
+RETOUR ::= retourne EXPR pointvirgule;
+
+CONDITION ::= si EXPR alors CORPS sinon CORPS finsi;
+
+TANTQUE ::= tantque EXPR faire CORPS fintantque;
+
+POUR ::= pour ident allantde EXPR a EXPR faire CORPS finpour;
+
+EXPR ::= EXPR OPEBIN:op EXPR 
+{:  
+
+    System.out.println("Opebin : " + op);
+    System.out.println("Pile status : " + pileArbres.size());
+
+    // Récupère les expressions gauche et droite.
+    Expression g = (Expression)pileArbres.pop();
+    Expression d = (Expression)pileArbres.pop();
+
+    switch (op) {
+        case "+": 
+            pileArbres.push(new Addition(g, d, 1));
+            break;
+        case "-":
+            pileArbres.push(new Soustraction(g, d, 1));
+            break;
+    }
+:}
+    | OPEUN EXPR
+	| parentouvrante EXPR parentfermante
+    | OPERANDE
+;
+
+ACCES ::= ident:i 
+        {: 
+            // Push l'identifiant dans l'arbre.
+            System.out.println("Access : " + i);
+            System.out.println("Pile status : " + pileArbres.size());
+            pileArbres.push(new Idf(i, 1)); 
+        :} 
+        | ident INDEX;
+
+INDEX ::= crochetouvrant EXPR crochetfermant | INDEX crochetouvrant EXPR crochetfermant;
+
+OPERANDE ::= ACCES | APPELFCT 
+
+| constanteent:value 
+        {: 
+            // Push la constante dans l'arbre.
+            System.out.println("Operande : " + value);
+            System.out.println("Pile status : " + pileArbres.size());
+            pileArbres.push(new Nombre(Integer.parseInt(value), 1)); 
+        :} 
+        | vrai | faux;
+
+OPEBIN ::=   plus           {: RESULT = "+"; :}
+           | moins          {: RESULT = "-"; :}  
+           | mult           {: RESULT = "*"; :}  
+           | div            {: RESULT = "/"; :}  
+           | doubleegal     {: RESULT = "=="; :}  
+           | different      {: RESULT = "<>"; :}  
+           | pluspetit      {: RESULT = "<"; :}  
+           | plusgrand      {: RESULT = ">"; :}  
+           | pluspetitegal  {: RESULT = "<="; :}  
+           | plusgrandegal  {: RESULT = ">="; :}  
+           | et             {: RESULT = "et"; :}  
+           | ou             {: RESULT = "ou"; :};  
+
+OPEUN ::= moinsunaire | no;
+
+APPELFCT ::= ident parentouvrante parentfermante 
+	    | ident parentouvrante PAREFF parentfermante
+;
+
+PAREFF ::= EXPR | PAREFF virgule EXPR;
+
