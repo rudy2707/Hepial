@@ -124,7 +124,7 @@ AXIOME ::= PROGRAMME {:
 
     System.out.println("Analyse sémantique");
     
-    AnalyseurSemantique.getInstance().analyse(pilesArbres.peek());
+    //AnalyseurSemantique.getInstance().analyse(pilesArbres.peek());
     
     
     :};

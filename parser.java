@@ -487,7 +487,7 @@ class CUP$parser$actions {
 
     System.out.println("Analyse sémantique");
     
-    AnalyseurSemantique.getInstance().analyse(pilesArbres.peek());
+    //AnalyseurSemantique.getInstance().analyse(pilesArbres.peek());
     
     
     
