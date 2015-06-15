@@ -5,7 +5,8 @@
  *
  *    Description:  Implémente l'interface visiteur.
  *                  C'est cette classe qui implémente les contrôles sémantiques.
-*                  (Vérifie les types, ...)
+*                   (Vérifie les types, ...)
+*                   Cette classe est également un singleton.
  *
  *        Version:  1.0
  *        Created:  04/06/2015 10:03:36 PM
@@ -23,6 +24,20 @@ package Arbre;
 import java.util.*;
 
 public class AnalyseurSemantique implements Visiteur {
+    // Singleton
+    private static AnalyseurSemantique instance = null;;
+
+    public AnalyseurSemantique() {
+
+    }
+
+    public static AnalyseurSemantique getInstance() {
+        if (instance == null)
+        {
+            instance = new AnalyseurSemantique();
+        }
+        return instance;
+    }
 
     public void analyse(ArbreAbstrait arbre) {
         arbre.accept(this);
@@ -41,6 +56,7 @@ public class AnalyseurSemantique implements Visiteur {
         if (!a.droit().getType().estConforme(TypeEntier.getInstance())) {
             // TODO : Error
         }
+        return null;
     }
 
     public Object visiter(Soustraction s) {
@@ -83,6 +99,9 @@ public class AnalyseurSemantique implements Visiteur {
     public Object visiter(Idf i) {
 
 
+    }
+
+    public Object visiter(Ident i) {
     }
 
     public Object visiter(Nombre n) {

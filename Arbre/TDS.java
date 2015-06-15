@@ -4,6 +4,9 @@
  *       Filename:  TDS.java
  *
  *    Description:  Implémentation de la table des symboles.
+ *                  Les symboles sont stockés dans une hashmap.
+ *                  Quand on entre dans un nouveau bloc, on empile.
+ *                  Quand on sort d'un bloc, on dépile.
  *
  *        Version:  1.0
  *        Created:  04/21/2015 07:24:36 PM
@@ -19,21 +22,7 @@
 package Arbre;
 
 
-/*
- * Les symboles vont être stockés dans une hashmap.
- *
- * Avec les fonctions, il va y avoir des blocs.
- *
- * A chaque entrée de bloc, on empile, quand on sort d'un bloc, on dépile.
- *
- * Est-ce suffisant ???
- *
- */
-
 import java.util.*;
-
-//import Entree.java;
-//import Symbole.java;
 
 public class TDS {
 
