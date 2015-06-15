@@ -40,6 +40,7 @@ public class Bloc extends Instruction {
 
 	public void add(Instruction i) {
 		this.instr.add(i);
+		System.out.println("Ajout dans le bloc \n" + this);
 	}
 
     public Object accepter(Visiteur v) {
@@ -47,6 +48,6 @@ public class Bloc extends Instruction {
     }
 
 	public String toString() {
-		return "Bloc";
+		return "Bloc : " + this.instr;
 	}
 }

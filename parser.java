@@ -488,13 +488,7 @@ class CUP$parser$actions {
     afficheArbre();
 
     System.out.println("Analyse sémantique");
-    
-<<<<<<< HEAD
-    AnalyseurSemantique.getInstance().analyse(pileArbres.peek());
-=======
     //AnalyseurSemantique.getInstance().analyse(pilesArbres.peek());
->>>>>>> 399b30f1a0ee192b1ceb735b19976eee9a69d0d4
-    
     
     
               CUP$parser$result = parser.getSymbolFactory().newSymbol("AXIOME",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -534,6 +528,7 @@ class CUP$parser$actions {
 		 
     System.out.println("jsuis dans l'entete"); 
     Bloc bloc = new Bloc(0);
+    pileArbres.push(bloc);
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ENTETE",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -593,7 +588,7 @@ class CUP$parser$actions {
         Entree e = new EntreeEntBool(i);    // Ajout d'une entrée.
         Symbole s = new SymboleEntBool(2, lastType);
 
-        System.out.println("i : " + id);
+        //System.out.println("i : " + id);
         System.out.println("Lasttype : " + lastType);
 
         tds.getInstance().ajouter(e, s);
@@ -751,10 +746,11 @@ class CUP$parser$actions {
             {
               String RESULT =null;
 		 
-    Bloc b = (Bloc) pileArbres.pop();
-    Instruction i = (Instruction) pileArbres.pop(); 
-    b.add(i);
-    pileArbres.push(b);
+    System.out.println("Etat de la pile dans CORPS : "); afficheArbre();
+    //Bloc b = (Bloc) pileArbres.pop();
+    //Instruction i = (Instruction) pileArbres.pop(); 
+    //b.add(i);
+    //pileArbres.push(b);
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CORPS",15, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -836,6 +832,12 @@ class CUP$parser$actions {
           case 32: // LIRE ::= lire ident pointvirgule 
             {
               String RESULT =null;
+		 
+    // TODO : Faire 2 classe Lire et Ecrire pour ajouter dans le bloc
+
+    //Idf i = pileArbres.pop();
+    //Bloc b = pileArbres.pop();
+    //b.add(new Li)
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("LIRE",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -863,14 +865,21 @@ class CUP$parser$actions {
           case 35: // AFFECTATION ::= ACCES affectation EXPR pointvirgule 
             {
               String RESULT =null;
-		
+		  
+    System.out.println("Etat de la pile avant affectation : "); afficheArbre();
     System.out.println("Affectation : ");
     // Dépiler l'expression.
     Expression source = (Expression) (pileArbres.pop());
+    System.out.println("ICI ?");
     // Dépiler l'indentifiant (ACCES).
     Idf dest = (Idf)(pileArbres.pop());
+
+    Bloc b = (Bloc) (pileArbres.pop());
+
     // Rempiler l'affectation.
-    pileArbres.push(new Affectation(dest, source, 1));
+    //pileArbres.push(new Affectation(dest, source, 1));
+    b.add(new Affectation(dest, source, 1));
+    pileArbres.push(b);
     System.out.println("Pile status : " + pileArbres.size());
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("AFFECTATION",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -897,7 +906,7 @@ class CUP$parser$actions {
 		int c2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String c2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		  
-    //System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
+    System.out.println("Contenu de l'arbre abstrait COND : "); afficheArbre();
     //System.out.println("First pop : " + pileArbres.pop());
     //System.out.println("Second poop (lol) : " + pileArbres.pop());
     System.out.println("In da Condition");
@@ -940,13 +949,16 @@ class CUP$parser$actions {
 		int opright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String op = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		  
-    System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
+    System.out.println("Contenu de l'arbre abstrait EXPR : "); afficheArbre();
     System.out.println("Opebin : " + op);
     System.out.println("Pile status : " + pileArbres.size());
 
+
     // Récupère les expressions gauche et droite.
-    Expression g = (Expression)pileArbres.pop();
     Expression d = (Expression)pileArbres.pop();
+    Expression g = (Expression)pileArbres.pop();
+
+
 
     System.out.println("Expression 1 : " + g);
     System.out.println("Expression 2 : " + d);

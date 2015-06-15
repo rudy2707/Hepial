@@ -138,6 +138,7 @@ ENTETE ::= programme ident pointvirgule
 {: 
     System.out.println("jsuis dans l'entete"); 
     Bloc bloc = new Bloc(0);
+    pileArbres.push(bloc);
 :};
 
 DECLA ::=  DECLA DECLAVAR
@@ -155,7 +156,7 @@ DECLAVAR ::= TYPE:type LIDENT:list pointvirgule
         Entree e = new EntreeEntBool(i);    // Ajout d'une entrée.
         Symbole s = new SymboleEntBool(2, lastType);
 
-        System.out.println("i : " + id);
+        //System.out.println("i : " + id);
         System.out.println("Lasttype : " + lastType);
 
         tds.getInstance().ajouter(e, s);
@@ -199,29 +200,44 @@ PARAM ::= TYPE ident | PARAM virgule TYPE ident;
 
 CORPS ::= INSTR 
 {: 
-    Bloc b = (Bloc) pileArbres.pop();
-    Instruction i = (Instruction) pileArbres.pop(); 
-    b.add(i);
-    pileArbres.push(b);
+    System.out.println("Etat de la pile dans CORPS : "); afficheArbre();
+    //Bloc b = (Bloc) pileArbres.pop();
+    //Instruction i = (Instruction) pileArbres.pop(); 
+    //b.add(i);
+    //pileArbres.push(b);
 :}  | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
 
 INSTR ::= AFFECTATION | ECRIRE | LIRE | CONDITION | RETOUR | TANTQUE | POUR;
 
-LIRE ::= lire ident pointvirgule;
+LIRE ::= lire ident pointvirgule 
+{: 
+    // TODO : Faire 2 classe Lire et Ecrire pour ajouter dans le bloc
+
+    //Idf i = pileArbres.pop();
+    //Bloc b = pileArbres.pop();
+    //b.add(new Li)
+:};
 
 ECRIRE ::= ecrire EXPR pointvirgule
 	    | ecrire constantechaine pointvirgule
 ;
 
 AFFECTATION ::= ACCES affectation EXPR pointvirgule
-{:
+{:  
+    System.out.println("Etat de la pile avant affectation : "); afficheArbre();
     System.out.println("Affectation : ");
     // Dépiler l'expression.
     Expression source = (Expression) (pileArbres.pop());
+    System.out.println("ICI ?");
     // Dépiler l'indentifiant (ACCES).
     Idf dest = (Idf)(pileArbres.pop());
+
+    Bloc b = (Bloc) (pileArbres.pop());
+
     // Rempiler l'affectation.
-    pileArbres.push(new Affectation(dest, source, 1));
+    //pileArbres.push(new Affectation(dest, source, 1));
+    b.add(new Affectation(dest, source, 1));
+    pileArbres.push(b);
     System.out.println("Pile status : " + pileArbres.size());
 :};
 
@@ -229,7 +245,7 @@ RETOUR ::= retourne EXPR pointvirgule;
 
 CONDITION ::= si EXPR alors CORPS:c1 sinon CORPS:c2 finsi
 {:  
-    //System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
+    System.out.println("Contenu de l'arbre abstrait COND : "); afficheArbre();
     //System.out.println("First pop : " + pileArbres.pop());
     //System.out.println("Second poop (lol) : " + pileArbres.pop());
     System.out.println("In da Condition");
@@ -249,13 +265,16 @@ POUR ::= pour ident allantde EXPR a EXPR faire CORPS finpour;
 
 EXPR ::= EXPR OPEBIN:op EXPR 
 {:  
-    System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
+    System.out.println("Contenu de l'arbre abstrait EXPR : "); afficheArbre();
     System.out.println("Opebin : " + op);
     System.out.println("Pile status : " + pileArbres.size());
 
+
     // Récupère les expressions gauche et droite.
-    Expression g = (Expression)pileArbres.pop();
     Expression d = (Expression)pileArbres.pop();
+    Expression g = (Expression)pileArbres.pop();
+
+
 
     System.out.println("Expression 1 : " + g);
     System.out.println("Expression 2 : " + d);
