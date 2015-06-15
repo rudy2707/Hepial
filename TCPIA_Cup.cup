@@ -265,7 +265,7 @@ CONDITION ::= si EXPR alors CORPS sinon CORPS finsi
     
     Expression corps = (Expresionn)pileArbres.pop();
 
-    Condition con = new Condition(, c2, e, 1);
+    Condition con = new Condition(c1, c2, e, 1);
     bloc.add(con);
     //pileArbres.push(b); 
     System.out.println("Outta condition");
