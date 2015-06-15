@@ -107,35 +107,87 @@ public class AnalyseurSemantique implements Visiteur {
         return null;
     }
 
+    private static String ncf = "Source et dest. non conforme !";
     public Object visiter(Affectation a) {
         System.out.println("Debut Affectation sémantique");
         a.dest().accepter(this);    // Vérifie si l'identifiant destination est correct.
+        System.out.println("2");
         Type typeDest = a.dest().getType();
+        System.out.println("3");
         //a.source().accepter(this);  // Vérifie si l'expression source est correct.
         //Type tg = a.source().getType();
         Object v = a.source().accepter(Evaluateur.getInstance());
+        System.out.println("4");
 
         if (v != null)
             a.setSource(new Nombre((Integer)v, 1));
+        System.out.println("5");
 
         a.source().accepter(this);
+        System.out.println("6");
         Type typeSource = a.source().getType();
+        System.out.println("a");
+        System.out.println(a);
+
+        System.out.println(typeDest);
+        System.out.println(typeSource);
+        System.out.println("b");
+
         if (!(typeSource.estConforme(typeDest))) {
             // Erreur
             System.out.println("Error affectation sémantique");
+            System.out.println(ncf);
+            System.out.println("8");
         }
         else {
+            System.out.println("9");
             a.setType(typeDest);
+            System.out.println("10");
         }
         return null;
     }
 
 
     public Object visiter(Idf i) {
+        System.out.println("Idf visiter");
+        System.out.println(i.getName());
+        Ident id = new Ident(i.getName());
+        System.out.println("id : " + id);
+        EntreeEntBool e = new EntreeEntBool(id);
+        System.out.println("e : " + e.ident());
+        Symbole s = TDS.getInstance().getSymbole(e);
+        System.out.println(s);
+
+
+        System.out.println("Affichage de TDS : ");
+        System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
+
+        for (Map.Entry entry : TDS.getInstance().bloc.entrySet()) {
+            System.out.println("Ident : " + entry.getKey() + " / Type : " + entry.getValue());
+        }
+
+        if (s == null) {    // Pas de type, erreur.
+            System.out.println("Erreur, pas de type récupéré.");
+        }
+        else {
+            // Test le type.
+            System.out.println(s);
+        }
+
         return null;
     }
 
     public Object visiter(Ident i) {
+        //System.out.println("Ident visiter");
+        //Symbole s = TDS.getInstance().getSymbole(i.getName());
+        //if (s == null) {    // Pas de type, erreur.
+        //    System.out.println("Erreur, pas de type récupéré.");
+        //}
+        //else {
+        //    // Test le type.
+        //    System.out.println(s);
+        //}
+
         return null;
     }
 
@@ -143,11 +195,23 @@ public class AnalyseurSemantique implements Visiteur {
         return null;
     }
 
+    private static String eb = "Expression booléenne attendue !";
     public Object visiter(Condition c) {
+    //    Object v = c.condition().accepter(Evaluateur.getInstance());
+    //    if (v != null)
+    //        c.setValeurCondition()
         return null;
     }
 
     public Object visiter(Bloc b) {
+        //TDS.getInstance().entreeBloc();
+        // Appelle la méthode accepter pour chaque instruction.
+        System.out.println("Visiter bloc b avant");
+        for (int i = 0; i < b.instr().size(); i++) {
+            b.instr().get(i).accepter(this);
+        }
+        System.out.println("Visiter bloc b après");
+        //TDS.getInstance().sortieBloc();
         return null;
     }
 

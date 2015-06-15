@@ -17,13 +17,16 @@
  */
 package Arbre;
 
+import java.util.*;
+
 public abstract class Entree {
 
     // Identificateur de l'entrée.
     private Ident ident;
 
     // Construire une entrée.
-    protected Entree(Ident ident){
+    public Entree(Ident ident){
+        System.out.println("Constructeur Entree, avec i = " + ident);
         this.ident = ident;
     }
 
@@ -32,8 +35,10 @@ public abstract class Entree {
 
     // Utilisé pour l'affichage de la table des symboles.
     public String toString() {
-        String s = "";
-        s += this.ident;
-        return s;
+        //String s = "";
+        //s += this.ident;
+        //return s
+        //;
+        return "" + this.ident;
     }
 }

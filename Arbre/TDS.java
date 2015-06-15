@@ -71,6 +71,10 @@ public class TDS {
         return this.bloc.get(e);
     }
 
+    public Symbole getSymbole(Entree e) {
+        return bloc.get(e);
+    }
+
     /**
      *  Entrée dans un bloc.
      *

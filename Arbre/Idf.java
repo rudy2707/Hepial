@@ -41,6 +41,10 @@ public class Idf extends Expression {
         return v.visiter(this);
     }
 
+    public String getName() {
+        return this.nom;
+    }
+
     public String toString() {
         return this.nom;
     }

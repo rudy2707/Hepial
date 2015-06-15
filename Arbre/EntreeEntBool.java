@@ -18,6 +18,8 @@
 
 package Arbre;
 
+import java.util.*;
+
 public class EntreeEntBool extends Entree {
     // Identificateur de l'entrée.
     private Ident ident;
@@ -25,10 +27,15 @@ public class EntreeEntBool extends Entree {
     // Identificateur attaché à l'entrée.
     public EntreeEntBool(Ident ident) {
         super(ident);
+        System.out.println("Constructor EntreEntBool, avec i = " + ident);
     }
 
     public Ident ident() {
         return this.ident;
     }
 
+    public String toString () {
+
+        return "EntreeEntBool " + this.ident;
+    }
 }
