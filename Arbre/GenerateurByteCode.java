@@ -9,6 +9,7 @@
  *                  Il faut définir les opérations visiter(Nombre n) et
  *                  visiter(Idf i) ainsi que les méthodes visiter()
  *                  de chaque opérateur.
+ *                  C'est aussi un singleton.
  *
  *
  *        Version:  1.0
@@ -26,9 +27,25 @@ package Arbre;
 
 import java.util.*;
 
-public interface GenerateurByteCode implements Visiteur {
+public class GenerateurByteCode implements Visiteur {
 
+    private static GenerateurByteCode instance = null;
     private static StringBuilder cible = new StringBuilder();
+
+    public static GenerateurByteCode getInstance() {
+        if (instance == null) {
+            instance = new GenerateurByteCode();
+        }
+        return instance;
+    }
+
+    public void genereCode(ArbreAbstrait a) {
+        a.accepter(this);
+    }
+
+    public StringBuilder getCible() {
+        return this.cible;
+    }
 
     // Méthodes visiter() des différents éléments.
     // Nombre
@@ -45,40 +62,77 @@ public interface GenerateurByteCode implements Visiteur {
     public Object visiter(Binaire b) {
         b.gauche().accepter(this);
         b.droit().accepter(this);
-        cible.add(b.mnemonique());
+        //cible.append(b.mnemonique());
         return null;
     }
 
     // Opérations
-    Object visiter(Addition a) {
-        a.gauche().accept(this);
-        a.droit().accept(this);
+    public Object visiter(Addition a) {
+        a.gauche().accepter(this);
+        a.droit().accepter(this);
+        return null;
     }
 
-    Object visiter(Soustraction s);
-    Object visiter(Produit p);
-    Object visiter(Division d);
+    public Object visiter(Soustraction s) {
+        return null;
+    }
+
+    public Object visiter(Produit p) {
+        return null;
+    }
+    public Object visiter(Division d) {
+        return null;
+    }
 
     // Comparaison
-    Object visiter(Egal e);
-    Object visiter(Inferieur e);
-    Object visiter(InfEgal e);
-    Object visiter(Superieur e);
-    Object visiter(SupEgal e);
-    Object visiter(Different e);
+    public Object visiter(Egal e) {
+        return null;
+    }
 
-    Object visiter(Affectation a) {
+    public Object visiter(Inferieur e) {
+        return null;
+    }
+
+    public Object visiter(InfEgal e) {
+        return null;
+    }
+
+    public Object visiter(Superieur e) {
+        return null;
+    }
+
+    public Object visiter(SupEgal e) {
+        return null;
+    }
+
+    public Object visiter(Different e) {
+        return null;
+    }
+
+    public Object visiter(Affectation a) {
         // Code cible pour la source.
         a.source().accepter(this);
         // Code cible pour l'affectation.
-        cible.add(" istore ");
+        cible.append(" istore ");
 
         return null;
     }
 
-    Object visiter(Idf i) {
-        cible.add(" iload");
+    public Object visiter(Condition c) {
+        return null;
+    }
 
+    public Object visiter(Ident i) {
+        return null;
+    }
+
+    public Object visiter(Idf i) {
+        cible.append(" iload");
+
+        return null;
+    }
+
+    public Object visiter(Bloc b) {
         return null;
     }
 

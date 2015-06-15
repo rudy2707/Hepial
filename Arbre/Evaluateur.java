@@ -149,6 +149,10 @@ public class Evaluateur implements Visiteur {
         return null;
     }
 
+    public Object visiter(Bloc b) {
+        return null;
+    }
+
 
 
     // TODO : Condition, Pour, Appel de fonction, Bloc, ...
