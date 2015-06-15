@@ -1,0 +1,5 @@
+./*.class
+./Arbre/*.class
+./Parser.java
+./Lexer.java
+

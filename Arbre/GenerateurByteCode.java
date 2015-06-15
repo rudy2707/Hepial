@@ -42,8 +42,20 @@ public interface GenerateurByteCode implements Visiteur {
         return null;
     }
 
+    // Binaire
+    public Object visiter(Binaire b) {
+        b.gauche().accepter(this);
+        b.droit().accepter(this);
+        cible.add(b.mnemonique());
+        return null;
+    }
+
     // Opérations
-    Object visiter(Addition a);
+    Object visiter(Addition a) {
+        a.gauche().accept(this);
+        a.droit().accept(this);
+    }
+
     Object visiter(Soustraction s);
     Object visiter(Produit p);
     Object visiter(Division d);
@@ -57,7 +69,14 @@ public interface GenerateurByteCode implements Visiteur {
     Object visiter(Different e);
 
     Object visiter(Affectation a);
-    Object visiter(Idf i);
+
+    Object visiter(Idf i) {
+        if (i.symbole() instanceof Sym
+    }
+
+
+
+
     // TODO : Condition, Pour, Appel de fonction, Bloc, ...
 
 }

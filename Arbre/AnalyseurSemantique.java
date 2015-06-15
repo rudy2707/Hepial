@@ -82,6 +82,11 @@ public class AnalyseurSemantique implements Visiteur {
 
     public Object visiter(Idf i) {
 
+
+    }
+
+    public Object visiter(Nombre n) {
+
     }
     // TODO : Condition, Pour, Appel de fonction, Bloc, ...
 

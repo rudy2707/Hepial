@@ -43,18 +43,9 @@ public class Nombre extends Expression {
     public Object accepter(Visiteur v) {
         return v.visiter(this);
     }
-/*
+	
     public String toString() {
-        String s = "Nombre\n";
-        s += "Valeur : " + this.valeur + "\n";
-        s += this.type;
-        return s;
+	return String.valueOf(this.valeur);
     }
-    */
 
-    public String toString() {
-        String s = new String(); 
-        s += "" + this.valeur;
-        return s;
-    }
 }

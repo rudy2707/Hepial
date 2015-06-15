@@ -40,14 +40,7 @@ public class Idf extends Expression {
     public Object accepter(Visiteur v) {
         return v.visiter(this);
     }
-/*
-    public String toString() {
-        String s = "Idf\n";
-        s += "Nom : " + this.nom + "\n";
-        s += this.type;
-        return s;
-    }
-*/
+
     public String toString() {
         return this.nom;
     }

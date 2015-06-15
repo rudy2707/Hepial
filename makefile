@@ -26,4 +26,4 @@ sym.java parser.java : $(SRCCUP)
 
 clean:
 	rm -rf *.class *~ $(PARSER).java $(LEXER).java sym.java parse_prog
-	rm -rf Arbre/*.class
+	rm -rf Arbre/*.class Arbre/*~
