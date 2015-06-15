@@ -34,6 +34,8 @@ parser code {:
 
     public Type lastType;  // Dernier type récupéré.
 
+    //public Bloc bloc = new Bloc();
+
     public void afficheTDS() {
         System.out.println("Affichage de TDS : ");
         System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
@@ -134,7 +136,11 @@ PROGRAMME ::= ENTETE DECLA debutprg CORPS finprg {:
     System.out.println("Pile status : " + pileArbres.size());
 :};
 
-ENTETE ::= programme ident pointvirgule;
+ENTETE ::= programme ident pointvirgule 
+{: 
+    System.out.println("jsuis dans l'entete"); 
+    Bloc bloc = new Bloc(0);
+:};
 
 DECLA ::=  DECLA DECLAVAR
         |  DECLA DECLACONST
@@ -193,7 +199,13 @@ DIM ::= EXPR deuxpoints EXPR
 
 PARAM ::= TYPE ident | PARAM virgule TYPE ident;
 
-CORPS ::= INSTR | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
+CORPS ::= INSTR 
+{: 
+    Bloc b = (Bloc) pileArbres.pop();
+    Instruction i = (Instruction) pileArbres.pop(); 
+    b.add(i);
+    pileArbres.push(b);
+:}  | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
 
 INSTR ::= AFFECTATION | ECRIRE | LIRE | CONDITION | RETOUR | TANTQUE | POUR;
 
@@ -219,9 +231,18 @@ RETOUR ::= retourne EXPR pointvirgule;
 
 CONDITION ::= si EXPR alors CORPS:c1 sinon CORPS:c2 finsi
 {:  
+    //System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
+    //System.out.println("First pop : " + pileArbres.pop());
+    //System.out.println("Second poop (lol) : " + pileArbres.pop());
+    System.out.println("In da Condition");
+    Bloc b = (Bloc) pileArbres.pop();
+
     Expression e = (Expression)pileArbres.pop();
-    Condition con = new Condition(c1.toString(), c2.toString(), e, 1);
-    pileArbres.push(con); 
+    
+    Condition con = new Condition(c1, c2, e, 1);
+    b.add(con);
+    pileArbres.push(b); 
+    System.out.println("Outta condition");
 :};
 
 TANTQUE ::= tantque EXPR faire CORPS fintantque;
@@ -230,13 +251,16 @@ POUR ::= pour ident allantde EXPR a EXPR faire CORPS finpour;
 
 EXPR ::= EXPR OPEBIN:op EXPR 
 {:  
-
+    System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
     System.out.println("Opebin : " + op);
     System.out.println("Pile status : " + pileArbres.size());
 
     // Récupère les expressions gauche et droite.
     Expression g = (Expression)pileArbres.pop();
     Expression d = (Expression)pileArbres.pop();
+
+    System.out.println("Expression 1 : " + g);
+    System.out.println("Expression 2 : " + d);
 
     switch (op) {
         case "+": 
@@ -246,7 +270,9 @@ EXPR ::= EXPR OPEBIN:op EXPR
             pileArbres.push(new Soustraction(g, d, 1));
             break;
         case "==":
-            pileArbres.push(new Affectation((Idf)g, d, 1));
+            System.out.println("In da case");
+            pileArbres.push(new Egal(g, d, 1));
+            System.out.println("Outta case");
             break;
     }
 :}

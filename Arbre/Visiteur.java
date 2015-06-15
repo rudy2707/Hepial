@@ -23,6 +23,9 @@ package Arbre;
 import java.util.*;
 
 public interface Visiteur {
+
+    Object visiter(Bloc b);
+
     // Méthodes visiter() des différents éléments.
     // Opérations
     Object visiter(Addition a);
@@ -32,7 +35,7 @@ public interface Visiteur {
     //Object visiter(Division d);
 
     // Comparaison
-    //Object visiter(Egal e);
+    Object visiter(Egal e);
     //Object visiter(Inferieur e);
     //Object visiter(InfEgal e);
     //Object visiter(Superieur e);

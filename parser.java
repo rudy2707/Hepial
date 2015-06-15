@@ -422,6 +422,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
     public Type lastType;  // Dernier type récupéré.
 
+    //public Bloc bloc = new Bloc();
+
     public void afficheTDS() {
         System.out.println("Affichage de TDS : ");
         System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
@@ -525,6 +527,9 @@ class CUP$parser$actions {
           case 3: // ENTETE ::= programme ident pointvirgule 
             {
               String RESULT =null;
+		 
+    System.out.println("jsuis dans l'entete"); 
+    Bloc bloc = new Bloc(0);
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ENTETE",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -741,6 +746,11 @@ class CUP$parser$actions {
           case 23: // CORPS ::= INSTR 
             {
               String RESULT =null;
+		 
+    Bloc b = (Bloc) pileArbres.pop();
+    Instruction i = (Instruction) pileArbres.pop(); 
+    b.add(i);
+    pileArbres.push(b);
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CORPS",15, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -883,9 +893,18 @@ class CUP$parser$actions {
 		int c2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String c2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		  
+    //System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
+    //System.out.println("First pop : " + pileArbres.pop());
+    //System.out.println("Second poop (lol) : " + pileArbres.pop());
+    System.out.println("In da Condition");
+    Bloc b = (Bloc) pileArbres.pop();
+
     Expression e = (Expression)pileArbres.pop();
-    Condition con = new Condition(c1.toString(), c2.toString(), e, 1);
-    pileArbres.push(con); 
+    
+    Condition con = new Condition(c1, c2, e, 1);
+    b.add(con);
+    pileArbres.push(b); 
+    System.out.println("Outta condition");
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CONDITION",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -917,13 +936,16 @@ class CUP$parser$actions {
 		int opright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String op = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		  
-
+    System.out.println("Contenu de l'arbre abstrait : "); afficheArbre();
     System.out.println("Opebin : " + op);
     System.out.println("Pile status : " + pileArbres.size());
 
     // Récupère les expressions gauche et droite.
     Expression g = (Expression)pileArbres.pop();
     Expression d = (Expression)pileArbres.pop();
+
+    System.out.println("Expression 1 : " + g);
+    System.out.println("Expression 2 : " + d);
 
     switch (op) {
         case "+": 
@@ -933,7 +955,9 @@ class CUP$parser$actions {
             pileArbres.push(new Soustraction(g, d, 1));
             break;
         case "==":
-            pileArbres.push(new Affectation((Idf)g, d, 1));
+            System.out.println("In da case");
+            pileArbres.push(new Egal(g, d, 1));
+            System.out.println("Outta case");
             break;
     }
 
