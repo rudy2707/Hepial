@@ -1,5 +1,6 @@
-./*.class
-./Arbre/*.class
-./Parser.java
-./Lexer.java
-./sym.java
+*.class
+Arbre/*.class
+Parser.java
+Lexer.java
+sym.java
+*.swp

@@ -26,5 +26,5 @@ import java.util.*;
 
 public interface ArbreAbstrait {
 
-    Object accepter (Visiteur v);
+    public Object accepter(Visiteur v);
 }

@@ -38,11 +38,11 @@ public class Affectation extends Instruction {
 	public Expression dest() {
 		return this.dest;
 	}
-/*
-	public String toString() {
-		return "" + this.dest;
-	}
-*/
+
+    public void setSource(Expression s) {
+        this.source = s;
+    }
+
     public Object accepter(Visiteur v) {
         return v.visiter(this);
     }

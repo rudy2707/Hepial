@@ -28,16 +28,16 @@ public interface Visiteur {
     Object visiter(Addition a);
     Object visiter(Soustraction s);
     Object visiter(Nombre n);
-    //Object visiter(Produit p);
-    //Object visiter(Division d);
+    Object visiter(Produit p);
+    Object visiter(Division d);
 
     // Comparaison
-    //Object visiter(Egal e);
-    //Object visiter(Inferieur e);
-    //Object visiter(InfEgal e);
-    //Object visiter(Superieur e);
-    //Object visiter(SupEgal e);
-    //Object visiter(Different e);
+    Object visiter(Egal e);
+    Object visiter(Inferieur e);
+    Object visiter(InfEgal e);
+    Object visiter(Superieur e);
+    Object visiter(SupEgal e);
+    Object visiter(Different e);
 
     Object visiter(Affectation a);
     Object visiter(Idf i);

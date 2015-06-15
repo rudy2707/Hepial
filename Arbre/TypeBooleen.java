@@ -40,7 +40,7 @@ public class TypeBooleen extends Type {
     }
 
     public boolean estConforme(Type other) {
-        return other instanceof TypeEntier;
+        return other instanceof TypeBooleen;
     }
 
     public String toString() {

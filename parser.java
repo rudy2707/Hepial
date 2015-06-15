@@ -485,9 +485,9 @@ class CUP$parser$actions {
     System.out.println("Arbre abstrait");
     afficheArbre();
 
-    //System.out.println("Analyse sémantique");
+    System.out.println("Analyse sémantique");
     
-    //AnalyseurSemantique.analyse(pilesArbres.peek());
+    AnalyseurSemantique.getInstance().analyse(pileArbres.peek());
     
     
     

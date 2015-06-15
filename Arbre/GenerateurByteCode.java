@@ -28,8 +28,7 @@ import java.util.*;
 
 public interface GenerateurByteCode implements Visiteur {
 
-    private static cible = new StringBuilder();
-
+    private static StringBuilder cible = new StringBuilder();
 
     // Méthodes visiter() des différents éléments.
     // Nombre
@@ -68,10 +67,19 @@ public interface GenerateurByteCode implements Visiteur {
     Object visiter(SupEgal e);
     Object visiter(Different e);
 
-    Object visiter(Affectation a);
+    Object visiter(Affectation a) {
+        // Code cible pour la source.
+        a.source().accepter(this);
+        // Code cible pour l'affectation.
+        cible.add(" istore ");
+
+        return null;
+    }
 
     Object visiter(Idf i) {
-        if (i.symbole() instanceof Sym
+        cible.add(" iload");
+
+        return null;
     }
 
 
