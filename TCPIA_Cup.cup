@@ -135,7 +135,7 @@ AXIOME ::= PROGRAMME {:
     BufferedWriter bw = new BufferedWriter(new FileWriter(dstFileName));
     bw.write(GenerateurByteCode.getInstance().getCible().toString());
     bw.close();
-	System.out.println("done ("+dstFileName+")");
+	System.out.println("Done ("+dstFileName+")");
     
     :};
 

@@ -46,15 +46,16 @@ public class AnalyseurSemantique implements Visiteur {
     // Méthodes visiter() des différents éléments.
     // Opérations
     public Object visiter(Addition a) {
+        System.out.println("---------------------------Analyseur Visiter addition.");
         // Vérifie les types de l'addition.
         a.gauche().accepter(this);
         if (!a.gauche().getType().estConforme(TypeEntier.getInstance())) {
-            // TODO : Error
+            System.out.println("---------------------------Erreur de type.");
         }
 
         a.droit().accepter(this);
         if (!a.droit().getType().estConforme(TypeEntier.getInstance())) {
-            // TODO : Error
+            System.out.println("---------------------------Erreur de type.");
         }
         return null;
     }
@@ -107,6 +108,7 @@ public class AnalyseurSemantique implements Visiteur {
     }
 
     public Object visiter(Affectation a) {
+        System.out.println("Debut Affectation sémantique");
         a.dest().accepter(this);    // Vérifie si l'identifiant destination est correct.
         Type typeDest = a.dest().getType();
         //a.source().accepter(this);  // Vérifie si l'expression source est correct.
@@ -120,17 +122,12 @@ public class AnalyseurSemantique implements Visiteur {
         Type typeSource = a.source().getType();
         if (!(typeSource.estConforme(typeDest))) {
             // Erreur
+            System.out.println("Error affectation sémantique");
         }
         else {
-            //a.setType(typeDest);
+            a.setType(typeDest);
         }
         return null;
-
-        //if (!tg.estConforme(td)) {
-        //    // TODO : Générer une erreur, idéalement avec la ligne.
-        //    // Pour la ligne, il faut la passer depuis le flex.
-        //    // Faire une classe pour stocker les messages d'erreur ???
-        //}
     }
 
 

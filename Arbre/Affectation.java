@@ -24,6 +24,7 @@ public class Affectation extends Instruction {
 
 	private Expression source;
 	private Idf dest;
+    private Type type;
 
 	public Affectation(Idf dest, Expression source, int lig) {
 		super(lig);
@@ -41,6 +42,10 @@ public class Affectation extends Instruction {
 
     public void setSource(Expression s) {
         this.source = s;
+    }
+
+    public void setType(Type t) {
+        this.type = t;
     }
 
     public Object accepter(Visiteur v) {
