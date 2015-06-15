@@ -119,13 +119,23 @@ AXIOME ::= PROGRAMME {:
        Le texte doit être écrit dans un bufferwrite pour pouvoir être 
        créer du bytecode avec jasmin (makefile)
     */
+    Bloc root = (Bloc)pileArbres.peek();
     System.out.println("Table des symboles");
     afficheTDS();
     System.out.println("Arbre abstrait");
     afficheArbre();
 
     System.out.println("Analyse sémantique");
-    //AnalyseurSemantique.getInstance().analyse(pilesArbres.peek());
+    AnalyseurSemantique.getInstance().analyse(pileArbres.peek());
+    System.out.println("Done");
+
+    System.out.println("Génération du Bytecode");
+    GenerateurByteCode.getInstance().genereCode(root);
+    String dstFileName = "outputBytecode.txt";
+    BufferedWriter bw = new BufferedWriter(new FileWriter(dstFileName));
+    bw.write(GenerateurByteCode.getInstance().getCible().toString());
+    bw.close();
+	System.out.println("done ("+dstFileName+")");
     
     :};
 

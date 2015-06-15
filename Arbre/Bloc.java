@@ -19,9 +19,10 @@
 package Arbre;
 
 import java.util.*;
+import java.io.*;
 
 public class Bloc extends Instruction {
-		
+
 	private List<Instruction> instr;
 
 	public Bloc (int lig) {
@@ -33,10 +34,10 @@ public class Bloc extends Instruction {
 		super(lig);
 		this.instr.add(instr);
 	}	// Bloc
-	
+
 	public List<Instruction> instr() {
 		return this.instr;
-	}	
+	}
 
 	public void add(Instruction i) {
 		this.instr.add(i);

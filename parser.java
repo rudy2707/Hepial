@@ -482,19 +482,23 @@ class CUP$parser$actions {
        Le texte doit être écrit dans un bufferwrite pour pouvoir être 
        créer du bytecode avec jasmin (makefile)
     */
+    Bloc root = (Bloc)pileArbres.peek();
     System.out.println("Table des symboles");
     afficheTDS();
     System.out.println("Arbre abstrait");
     afficheArbre();
 
     System.out.println("Analyse sémantique");
-    
-<<<<<<< HEAD
     AnalyseurSemantique.getInstance().analyse(pileArbres.peek());
-=======
-    //AnalyseurSemantique.getInstance().analyse(pilesArbres.peek());
->>>>>>> 399b30f1a0ee192b1ceb735b19976eee9a69d0d4
-    
+    System.out.println("Done");
+
+    System.out.println("Génération du Bytecode");
+    GenerateurByteCode.getInstance().genereCode(root);
+    String dstFileName = "outputBytecode.txt";
+    BufferedWriter bw = new BufferedWriter(new FileWriter(dstFileName));
+    bw.write(GenerateurByteCode.getInstance().getCible().toString());
+    bw.close();
+	System.out.println("done ("+dstFileName+")");
     
     
               CUP$parser$result = parser.getSymbolFactory().newSymbol("AXIOME",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);

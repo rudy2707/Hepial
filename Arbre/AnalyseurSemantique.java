@@ -142,14 +142,15 @@ public class AnalyseurSemantique implements Visiteur {
         return null;
     }
 
-    public Object visiter(Ident i) {
-    }
-
     public Object visiter(Nombre n) {
         return null;
     }
 
     public Object visiter(Condition c) {
+        return null;
+    }
+
+    public Object visiter(Bloc b) {
         return null;
     }
 
