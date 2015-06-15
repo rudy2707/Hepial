@@ -34,7 +34,7 @@ parser code {:
 
     public Type lastType;  // Dernier type récupéré.
 
-    //public Bloc bloc = new Bloc();
+    public Bloc bloc;
 
     public void afficheTDS() {
         System.out.println("Affichage de TDS : ");
@@ -147,7 +147,7 @@ PROGRAMME ::= ENTETE DECLA debutprg CORPS finprg {:
 ENTETE ::= programme ident pointvirgule 
 {: 
     System.out.println("jsuis dans l'entete"); 
-    Bloc bloc = new Bloc(0);
+    bloc = new Bloc(0);
     pileArbres.push(bloc);
 :};
 
@@ -242,30 +242,32 @@ AFFECTATION ::= ACCES affectation EXPR pointvirgule
     // Dépiler l'indentifiant (ACCES).
     Idf dest = (Idf)(pileArbres.pop());
 
-    Bloc b = (Bloc) (pileArbres.pop());
+    //Bloc b = (Bloc) (pileArbres.pop());
 
     // Rempiler l'affectation.
     //pileArbres.push(new Affectation(dest, source, 1));
-    b.add(new Affectation(dest, source, 1));
-    pileArbres.push(b);
+    bloc.add(new Affectation(dest, source, 1));
+    //pileArbres.push(b);
     System.out.println("Pile status : " + pileArbres.size());
 :};
 
 RETOUR ::= retourne EXPR pointvirgule;
 
-CONDITION ::= si EXPR alors CORPS:c1 sinon CORPS:c2 finsi
+CONDITION ::= si EXPR alors CORPS sinon CORPS finsi
 {:  
     System.out.println("Contenu de l'arbre abstrait COND : "); afficheArbre();
     //System.out.println("First pop : " + pileArbres.pop());
     //System.out.println("Second poop (lol) : " + pileArbres.pop());
     System.out.println("In da Condition");
-    Bloc b = (Bloc) pileArbres.pop();
+    //Bloc b = (Bloc) pileArbres.pop();
 
     Expression e = (Expression)pileArbres.pop();
     
-    Condition con = new Condition(c1, c2, e, 1);
-    b.add(con);
-    pileArbres.push(b); 
+    Expression corps = (Expresionn)pileArbres.pop();
+
+    Condition con = new Condition(, c2, e, 1);
+    bloc.add(con);
+    //pileArbres.push(b); 
     System.out.println("Outta condition");
 :};
 
