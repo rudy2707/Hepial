@@ -253,7 +253,7 @@ AFFECTATION ::= ACCES affectation EXPR pointvirgule
 
 RETOUR ::= retourne EXPR pointvirgule;
 
-CONDITION ::= si EXPR alors CORPS sinon CORPS finsi
+CONDITION ::= si EXPR alors CORPS:c1 sinon CORPS:c2 finsi
 {:  
     System.out.println("Contenu de l'arbre abstrait COND : "); afficheArbre();
     //System.out.println("First pop : " + pileArbres.pop());
@@ -263,7 +263,7 @@ CONDITION ::= si EXPR alors CORPS sinon CORPS finsi
 
     Expression e = (Expression)pileArbres.pop();
     
-    Expression corps = (Expresionn)pileArbres.pop();
+    //Expression corps = (Expresionn)pileArbres.pop();
 
     Condition con = new Condition(c1, c2, e, 1);
     bloc.add(con);
