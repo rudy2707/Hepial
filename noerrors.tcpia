@@ -1,0 +1,18 @@
+programme test;
+
+entier argent;
+entier impot;
+
+debutprg
+
+argent = 100 + 100;
+ecrire argent;
+
+impot = argent / 2;
+impot = argent - 50;
+ecrire impot;
+
+argent = argent - impot;
+ecrire argent;
+
+finprg

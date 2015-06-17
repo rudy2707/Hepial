@@ -24,7 +24,6 @@ public class Addition extends Arithmetique {
 
 	public Addition (Expression g, Expression d, int lig) {
 		super(g, d, lig);
-		System.out.println(this);
 	}
 
 	public String operateur () {
