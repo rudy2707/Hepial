@@ -21,14 +21,14 @@ package Arbre;
 import java.util.*;
 
 public class Condition extends Instruction {
-	/*	
+	/*
 	private List<Instruction> alors;
 	private List<Instruction> sinon;
 	*/
 	private String alors;
 	private String sinon;
 	private Expression condition;
-		
+
 	//public Condition (List<Instruction> alors, List<Instruction> sinon, Expression condition, int lig) {
 	public Condition (String alors, String sinon, Expression condition, int lig) {
 		super(lig);
@@ -36,29 +36,29 @@ public class Condition extends Instruction {
 		this.sinon = sinon;
 		this.condition = condition;
 		System.out.println("Condition");
-	}	
-	
+	}
+
 	public Expression condition() {
 		return this.condition;
 	}
-	
+
 	/*
 	public List<Instruction> alors() {
 		return this.alors;
-	}	
+	}
 
 	public List<Instruction> sinon() {
 		return this.sinon;
-	}	
+	}
 	*/
 	public String alors() {
 		return this.alors;
-	}	
+	}
 
 	public String sinon() {
 		return this.sinon;
-	}	
-	
+	}
+
     public Object accepter(Visiteur v) {
         return v.visiter(this);
     }

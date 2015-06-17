@@ -4,6 +4,8 @@
  *       Filename:  Entree.java
  *
  *    Description:  Représentation d'une entrée.
+ *                  Attention !!! Pour que HashMap fonctionne des Entrées,
+ *                  il faut surcharger la méthode equals et hashCode !!!
  *
  *        Version:  1.0
  *        Created:  04/28/2015 07:24:36 PM

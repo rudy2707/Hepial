@@ -1,0 +1,19 @@
+Axel Fahy & Rudol Höhn - 18.06.2015
+
+-----
+TCPIA
+-----
+
+Commande à exécuter : 
+
+    % make
+    % java -classpath java-cup-11b.jar :. TCPI input.txt
+    (où, 'input.txt' est le fichier à sélectionner).
+
+    % java -jar jasmin-2.4/jasmin.jar outputBytecode.txt
+      -> Generated : Main.class
+    % java Main
+
+
+
+

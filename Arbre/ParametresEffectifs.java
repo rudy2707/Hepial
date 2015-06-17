@@ -26,6 +26,8 @@ import java.util.*;
 ----------------------------------------------------
 
 On ne sait pas ce que cette classe fait !
+Elle doit surement récupérer les paramètres d'une fonction...
+NON implémenté.
 
 ----------------------------------------------------
 
@@ -35,7 +37,7 @@ On ne sait pas ce que cette classe fait !
 
 
 public class ParametresEffectifs {
-	
+
 	List<Expression> param;
-	
+
 }

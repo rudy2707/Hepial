@@ -22,16 +22,6 @@ import java.util.*;
 
 public abstract class Type {
 
-    //private static Type instance;
-
-    //public static Type getInstance() {
-    //    if (instance == null)
-	//	{
-    //        instance = new Type();
-	//	}
-	//	return instance;
-    //}
-
     public abstract boolean estConforme(Type other);
 
     public String toString() {

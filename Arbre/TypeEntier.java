@@ -41,7 +41,6 @@ public class TypeEntier extends Type {
 
     // Vérifie si le type est comforme.
     public boolean estConforme(Type other) {
-        System.out.println("estconforme entier");
         return other instanceof TypeEntier;
     }
 

@@ -49,7 +49,6 @@ public abstract class Binaire extends Expression {
 
 	public String toString () {
 		return "(" + operandeGauche + operateur() + operandeDroit + ")";
-		//return "Binaire";
 	}
 
 	public abstract String operateur();

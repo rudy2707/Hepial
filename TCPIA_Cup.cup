@@ -153,7 +153,6 @@ PROGRAMME ::= ENTETE DECLA debutprg CORPS finprg {:
 
 ENTETE ::= programme ident pointvirgule 
 {: 
-    System.out.println("jsuis dans l'entete"); 
     bloc = new Bloc(0);
     pileArbres.push(bloc);
 :};
@@ -173,8 +172,6 @@ DECLAVAR ::= TYPE:type LIDENT:list pointvirgule
         Entree e = new EntreeEntBool(i);    // Ajout d'une entrée.
         Symbole s = new SymboleEntBool(2, lastType, valeurPile);
         valeurPile++;
-        //System.out.println("i : " + id);
-        System.out.println("Lasttype : " + lastType);
 
         tds.getInstance().ajouter(e, s);
     }
@@ -215,22 +212,10 @@ DIM ::= EXPR deuxpoints EXPR
 
 PARAM ::= TYPE ident | PARAM virgule TYPE ident;
 
-CORPS ::= INSTR 
-{: 
-    System.out.println("Etat de la pile dans CORPS : "); afficheArbre();
-    //Bloc b = (Bloc) pileArbres.pop();
-    //Instruction i = (Instruction) pileArbres.pop(); 
-    //b.add(i);
-    //pileArbres.push(b);
-:}  | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
+CORPS ::= INSTR | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
 
 INSTR ::= AFFECTATION | ECRIRE 
-    {:
-    :}
-        | LIRE | CONDITION
-{: 
-    System.out.println("NANANANANANAN");
-:}
+    | LIRE | CONDITION
  | RETOUR | TANTQUE | POUR;
 
 LIRE ::= lire ident pointvirgule 
@@ -244,7 +229,6 @@ LIRE ::= lire ident pointvirgule
 
 ECRIRE ::= ecrire EXPR pointvirgule
 {:
-        System.out.println("ECRITURE");   
         Ecrire e = new Ecrire((Expression)(pileArbres.pop()), 1);
         bloc.add(e);
 :}
@@ -253,41 +237,23 @@ ECRIRE ::= ecrire EXPR pointvirgule
 
 AFFECTATION ::= ACCES affectation EXPR pointvirgule
 {:  
-    System.out.println("Etat de la pile avant affectation : "); afficheArbre();
-    System.out.println("Affectation : ");
     // Dépiler l'expression.
     Expression source = (Expression) (pileArbres.pop());
-    System.out.println("ICI ?");
     // Dépiler l'indentifiant (ACCES).
     Idf dest = (Idf)(pileArbres.pop());
 
-    //Bloc b = (Bloc) (pileArbres.pop());
-
     // Rempiler l'affectation.
-    //pileArbres.push(new Affectation(dest, source, 1));
     bloc.add(new Affectation(dest, source, 1));
-    //pileArbres.push(b);
-    System.out.println("Pile status : " + pileArbres.size());
 :};
 
 RETOUR ::= retourne EXPR pointvirgule;
 
 CONDITION ::= si EXPR alors CORPS:c1 sinon CORPS:c2 finsi
 {:  
-    System.out.println("Contenu de l'arbre abstrait COND : "); afficheArbre();
-    //System.out.println("First pop : " + pileArbres.pop());
-    //System.out.println("Second poop (lol) : " + pileArbres.pop());
-    System.out.println("In da Condition");
-    //Bloc b = (Bloc) pileArbres.pop();
-
     Expression e = (Expression)pileArbres.pop();
     
-    //Expression corps = (Expresionn)pileArbres.pop();
-
     Condition con = new Condition(c1, c2, e, 1);
     bloc.add(con);
-    //pileArbres.push(b); 
-    System.out.println("Outta condition");
 :};
 
 TANTQUE ::= tantque EXPR faire CORPS fintantque;
@@ -296,19 +262,9 @@ POUR ::= pour ident allantde EXPR a EXPR faire CORPS finpour;
 
 EXPR ::= EXPR OPEBIN:op EXPR 
 {:  
-    System.out.println("Contenu de l'arbre abstrait EXPR : "); afficheArbre();
-    System.out.println("Opebin : " + op);
-    System.out.println("Pile status : " + pileArbres.size());
-
-
     // Récupère les expressions gauche et droite.
     Expression d = (Expression)pileArbres.pop();
     Expression g = (Expression)pileArbres.pop();
-
-
-
-    System.out.println("Expression 1 : " + g);
-    System.out.println("Expression 2 : " + d);
 
     switch (op) {
         case "+": 
@@ -318,9 +274,7 @@ EXPR ::= EXPR OPEBIN:op EXPR
             pileArbres.push(new Soustraction(g, d, 1));
             break;
         case "==":
-            System.out.println("In da case");
             pileArbres.push(new Egal(g, d, 1));
-            System.out.println("Outta case");
             break;
     }
 :}
@@ -332,8 +286,6 @@ EXPR ::= EXPR OPEBIN:op EXPR
 ACCES ::= ident:i 
         {: 
             // Push l'identifiant dans l'arbre.
-            System.out.println("Access : " + i);
-            System.out.println("Pile status : " + pileArbres.size());
             pileArbres.push(new Idf(i, 1)); 
         :} 
         | ident INDEX;
@@ -345,8 +297,6 @@ OPERANDE ::= ACCES | APPELFCT
 | constanteent:value 
         {: 
             // Push la constante dans l'arbre.
-            System.out.println("Operande : " + value);
-            System.out.println("Pile status : " + pileArbres.size());
             pileArbres.push(new Nombre(Integer.parseInt(value), 1)); 
         :} 
         | vrai | faux;

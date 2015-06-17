@@ -3,7 +3,8 @@
  *
  *       Filename:  Bloc.java
  *
- *    Description:  Bloc
+ *    Description:  Bloc d'instruction.
+ *                  Contient la liste des instructions du blocs.
  *
  *        Version:  1.0
  *        Created:  05/05/2015 07:24:36 PM
@@ -41,7 +42,6 @@ public class Bloc extends Instruction {
 
 	public void add(Instruction i) {
 		this.instr.add(i);
-		System.out.println("Ajout dans le bloc \n" + this);
 	}
 
     public Object accepter(Visiteur v) {

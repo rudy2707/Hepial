@@ -22,14 +22,8 @@ import java.util.*;
 
 public class Addition extends Arithmetique {
 
-	private Expression g;
-	private Expression d;
-
-
 	public Addition (Expression g, Expression d, int lig) {
 		super(g, d, lig);
-		this.g = g;
-		this.d = d;
 		System.out.println(this);
 	}
 
@@ -46,8 +40,7 @@ public class Addition extends Arithmetique {
     }
 
     public String toString() {
-    	return "Addition" + g + this.operateur() + d;
-    	//return "Addition" + g;
+    	return "Addition";
     }
 
 }

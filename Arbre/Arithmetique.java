@@ -21,7 +21,7 @@ package Arbre;
 import java.util.*;
 
 public abstract class Arithmetique extends Binaire {
-	
+
 	public Arithmetique (Expression g, Expression d, int lig) {
 		super(g, d, lig);
 	}
@@ -29,5 +29,5 @@ public abstract class Arithmetique extends Binaire {
 	public String toString() {
 		return "Arithmetique";
 	}
-	
+
 }

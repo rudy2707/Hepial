@@ -4,6 +4,7 @@
  *       Filename:  Ecrire.java
  *
  *    Description:  Ecrire
+ *                  Ecrit sur la sortie standard.
  *
  *        Version:  1.0
  *        Created:  15/06/2015 07:24:36 PM

@@ -48,9 +48,7 @@ public class AnalyseurSemantique implements Visiteur {
      */
     public void checkBinaire(Binaire b) {
         // Vérifie les types d'une opération binaire et si la variable existe.
-        System.out.println("--------------------------------Gauche : " + b.gauche());
         b.gauche().accepter(this);
-        System.out.println("Type check : " + b.gauche().getType());
         if (b.gauche().getType() != null) {
             if (!b.gauche().getType().estConforme(TypeEntier.getInstance())) {
                 // Type non conforme.
@@ -62,8 +60,6 @@ public class AnalyseurSemantique implements Visiteur {
             Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (inconnu)");
         }
 
-        System.out.println("--------------------------------Droit : " + b.droit());
-        System.out.println("Type check : " + b.gauche().getType());
         b.droit().accepter(this);
         if (b.droit().getType() != null) {
             if (!b.droit().getType().estConforme(TypeEntier.getInstance())) {
@@ -147,9 +143,6 @@ public class AnalyseurSemantique implements Visiteur {
         a.source().accepter(this);
         Type typeSource = a.source().getType();
 
-        System.out.println("Typedest : " + typeDest);
-        System.out.println("Typesource : " + typeSource);
-
         if (typeSource != null && typeDest != null) {
             if (!(typeSource.estConforme(typeDest))) {
                 // Erreur
@@ -169,7 +162,6 @@ public class AnalyseurSemantique implements Visiteur {
 
     public Object visiter(Idf i) {
         Symbole s = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(i.getName())));
-        System.out.println("Symbole a: " + s);
         if (s == null) {    // Pas de type, erreur.
             Erreur.getInstance().ajouter("Erreur : l'identifiant " + i + " n'existe pas.");
             Erreur.getInstance().ajouter("Erreur, pas de type récupéré.");
@@ -204,11 +196,9 @@ public class AnalyseurSemantique implements Visiteur {
     public Object visiter(Bloc b) {
         //TDS.getInstance().entreeBloc();
         // Appelle la méthode accepter pour chaque instruction.
-        System.out.println("Visiter bloc b avant");
         for (int i = 0; i < b.instr().size(); i++) {
             b.instr().get(i).accepter(this);
         }
-        System.out.println("Visiter bloc b après");
         //TDS.getInstance().sortieBloc();
         return null;
     }

@@ -40,7 +40,6 @@ public class TypeBooleen extends Type {
     }
 
     public boolean estConforme(Type other) {
-        System.out.println("estconforme boolean");
         return other instanceof TypeBooleen;
     }
 

@@ -39,7 +39,6 @@ public class Soustraction extends Arithmetique {
     }
 
     public String toString() {
-    	//return "Soustraction : " + g + this.operateur() + d;
     	return "Soustraction";
     }
 

@@ -25,7 +25,6 @@ public class EntreeEntBool extends Entree {
     // Identificateur attaché à l'entrée.
     public EntreeEntBool(Ident ident) {
         super(ident);
-        System.out.println("Constructor EntreEntBool, avec i = " + ident);
     }
 
     public Ident ident() {
@@ -35,13 +34,4 @@ public class EntreeEntBool extends Entree {
     public String toString () {
         return "EntreeEntBool : " + super.ident();
     }
-
-    //public boolean equals(Object other) {
-    //    if (!(other instanceof Entree))
-    //        return false;
-
-    //    EntreeEntBool e = (EntreeEntBool)other;
-
-    //    return e.ident().equals(this.ident());
-    //}
 }

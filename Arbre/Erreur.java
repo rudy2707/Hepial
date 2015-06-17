@@ -4,6 +4,8 @@
  *       Filename:  Erreur.java
  *
  *    Description:  Gestion d'erreur en singleton.
+ *                  Dès que l'on fait un ajout de message d'erreur dans le StringBuffer,
+ *                  on met un booleen à 'true' pour indiquer que l'on a des bugs.
  *
  *        Version:  1.0
  *        Created:  17/06/2015 07:24:36 PM

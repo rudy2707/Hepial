@@ -54,13 +54,7 @@ public class GenerateurByteCode implements Visiteur {
     public Object visiter(Nombre n) {
         System.out.println("Byte : Nombre : " + n);
         int valeur = n.valeur();
-        /*if (valeur <= 5)
-            cible.append(" iconst_" + valeur + "\n");
-        else
-            cible.append(" bipush " + valeur + "\n");
-        */
         cible.append("ldc " + valeur + "\n");
-        //cible.append("istore " + n.getPile());
         return null;
     }
 
@@ -69,7 +63,6 @@ public class GenerateurByteCode implements Visiteur {
         System.out.println("Byte : Binaire : " + b);
         b.gauche().accepter(this);
         b.droit().accepter(this);
-        //cible.append(b.mnemonique());
         return null;
     }
 
@@ -79,10 +72,7 @@ public class GenerateurByteCode implements Visiteur {
         a.gauche().accepter(this);
         a.droit().accepter(this);
 
-        //cible.append("iload " + ((Idf)a.gauche()).getPile());
-        //cible.append("iload " + ((Idf)a.droit()).getPile());
         cible.append("iadd\n");
-        //cible.append("istore " + );
 
         return null;
     }
@@ -151,7 +141,6 @@ public class GenerateurByteCode implements Visiteur {
     }
 
     public Object visiter(Bloc b) {
-        //System.out.println("Byte : Bloc : " + b);
         // Header
         cible.append(".class public Main\n");
         cible.append(".super java/lang/Object\n");
@@ -169,39 +158,17 @@ public class GenerateurByteCode implements Visiteur {
         //; allocate stack big enough to hold all items
         cible.append(".limit stack 10\n");
         cible.append(".limit locals 100\n");
-        
+
         for (int i = 0; i < b.instr().size(); i++) {
             b.instr().get(i).accepter(this);
         }
 
-        //; push java.lang.System.out (type PrintStream)
-        // cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
-   
-        //; push string to be printed
-        //cible.append("ldc \"J'men fous\"\n");
-        /*
-        cible.append("ldc 9\n");
-        cible.append("istore 9\n");
-        cible.append("ldc 5\n");
-        cible.append("istore 5\n");
-        cible.append("iload 9\n");
-        cible.append("iload 5\n");
-        cible.append("iadd\n");
-        cible.append("istore 99\n");
-        cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
-        cible.append("iload 99\n");
-        //; invoke println
-        cible.append("invokevirtual java/io/PrintStream/println(I)V\n");
-        */
         //; terminate main
         cible.append("return\n");
 
         cible.append(".end method\n");
         return null;
     }
-
-
-
 
     // TODO : Condition, Pour, Appel de fonction, Bloc, ...
 
