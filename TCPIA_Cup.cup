@@ -129,6 +129,15 @@ AXIOME ::= PROGRAMME {:
     AnalyseurSemantique.getInstance().analyse(pileArbres.peek());
     System.out.println("Done");
 
+    if (Erreur.getInstance().isBug()) {
+        Erreur.getInstance().afficheErreurs();
+        System.out.println("Erreur durant l'analyse sémantique.");
+        System.out.println("Le Bytecode ne va PAS être généré !");
+        System.out.println("STOP : Arrêt de la compilation.");
+        System.exit(0);
+    }
+
+
     System.out.println("Génération du Bytecode");
     GenerateurByteCode.getInstance().genereCode(root);
     afficheArbre();
