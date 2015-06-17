@@ -170,7 +170,9 @@ public class GenerateurByteCode implements Visiteur {
         cible.append(".limit stack 10\n");
         cible.append(".limit locals 100\n");
         
-        b.accepter(this);
+        for (int i = 0; i < b.instr().size(); i++) {
+            b.instr().get(i).accepter(this);
+        }
 
         //; push java.lang.System.out (type PrintStream)
         // cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");

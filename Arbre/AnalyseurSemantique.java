@@ -28,7 +28,7 @@ public class AnalyseurSemantique implements Visiteur {
     private static AnalyseurSemantique instance = null;;
 
     // Valeur actuelle de la pile.
-    private int valeurPileActuelle = 0;
+    private int valeurPileActuelle = 1;
 
     public AnalyseurSemantique() {
 

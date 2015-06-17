@@ -6,6 +6,6 @@ entier ab;
 debutprg
 
 ac = 4 + 4 ;
-ab = ac ;
+ab = ac ; 
 
 finprg
