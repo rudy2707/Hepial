@@ -25,11 +25,14 @@ public class SymboleEntBool extends Symbole {
     private int ligne;
     // Type du symbole.
     private Type type;
+    // Adresse dans la pile du Bytecode
+    private int valeurPile;
 
     // Construire un Symbole.
-    public SymboleEntBool(int ligne, Type type) {
+    public SymboleEntBool(int ligne, Type type, int valeurPile) {
         super(ligne);
         this.type = type;
+        this.valeurPile = valeurPile;
     }
 
     // Retourne la ligne dans le texte.
@@ -48,5 +51,9 @@ public class SymboleEntBool extends Symbole {
 
     public Type getType() {
         return this.type;
+    }
+
+    public int getValeurPile() {
+        return this.valeurPile;
     }
 }

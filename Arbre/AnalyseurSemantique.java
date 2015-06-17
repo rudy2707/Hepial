@@ -180,10 +180,10 @@ public class AnalyseurSemantique implements Visiteur {
             i.setType(s.getType());
             // On attribut une position dans la pile à la valeur pour pouvoir
             // la retrouver plus tard.
-            i.setPile(this.valeurPileActuelle);
+            i.setPile(((SymboleEntBool)s).getValeurPile());
             // On incrément le numéro courant de la pile pour ne pas
             // réécrire sur des données.
-            this.valeurPileActuelle++;
+            //this.valeurPileActuelle++;
         }
 
         return null;
