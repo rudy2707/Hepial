@@ -94,7 +94,13 @@ public class TDS {
         System.out.println("e tds :" + e);
         System.out.println("e tds :" + e.ident());
         System.out.println("e tds :" + bloc.containsKey(e));
-        return bloc.get(e);
+        Symbole s = bloc.get(e);
+        System.out.println("Symbole :" + s);
+        //if (s == null)
+        //    return null;
+        //else
+        //    return s;
+        return s;
     }
 
     /**

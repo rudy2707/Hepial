@@ -122,13 +122,18 @@ public class AnalyseurSemantique implements Visiteur {
         System.out.println("Typedest : " + typeDest);
         System.out.println("Typesource : " + typeSource);
 
-        if (!(typeSource.estConforme(typeDest))) {
-            // Erreur
-            System.out.println("Error affectation sémantique");
-            System.out.println(ncf);
+        if (typeSource != null && typeDest != null) {
+            if (!(typeSource.estConforme(typeDest))) {
+                // Erreur
+                System.out.println("Erreur affectation sémantique.");
+                System.out.println(ncf);
+            }
+            else {
+                a.setType(typeDest);
+            }
         }
         else {
-            a.setType(typeDest);
+            System.out.println("Erreur affectation : le type n'est pas conforme.");
         }
         return null;
     }
@@ -137,6 +142,7 @@ public class AnalyseurSemantique implements Visiteur {
     public Object visiter(Idf i) {
         Symbole s = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(i.getName())));
         if (s == null) {    // Pas de type, erreur.
+            System.out.println("Erreur : l'identifiant " + i + " n'existe pas.");
             System.out.println("Erreur, pas de type récupéré.");
         }
         else {

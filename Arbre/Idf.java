@@ -27,8 +27,13 @@ public class Idf extends Expression {
 	public Idf(String nom, int lig) {
         super(lig);
 		this.nom = nom;
-        System.out.println(TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType());
-        this.type = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType();
+        //System.out.println("symb idf avant");
+        ////System.out.println(TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType());
+        //EntreeEntBool e = new EntreeEntBool(new Ident(nom));
+        //System.out.println("SYMBOLE idf avant");
+        //System.out.println("Entree : " + e);
+        //this.type = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType();
+        //System.out.println("symb idf apres");
 	}
 
     public Type getType() {
