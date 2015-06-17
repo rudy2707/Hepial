@@ -114,16 +114,15 @@ precedence left different, doubleegal, pluspetitegal, pluspetit, plusgrandegal, 
 
 AXIOME ::= PROGRAMME {:
     
-    System.out.println("Pile status : " + pileArbres.size());
     Bloc root = (Bloc)pileArbres.peek();
-    System.out.println("Table des symboles");
-    afficheTDS();
-    System.out.println("Arbre abstrait");
-    afficheArbre();
+    //System.out.println("Table des symboles");
+    //afficheTDS();
+    //System.out.println("Arbre abstrait");
+    //afficheArbre();
 
     System.out.println("Analyse sémantique");
     AnalyseurSemantique.getInstance().analyse(pileArbres.peek());
-    System.out.println("Done");
+    //System.out.println("Done");
 
     if (Erreur.getInstance().isBug()) {
         Erreur.getInstance().afficheErreurs();
@@ -136,10 +135,9 @@ AXIOME ::= PROGRAMME {:
 
     System.out.println("Génération du Bytecode");
     GenerateurByteCode.getInstance().genereCode(root);
-    afficheArbre();
     String dstFileName = "outputBytecode.txt";
     BufferedWriter bw = new BufferedWriter(new FileWriter(dstFileName));
-    System.out.println("Cible : " + GenerateurByteCode.getInstance().getCible());
+    //System.out.println("Cible : " + GenerateurByteCode.getInstance().getCible());
     bw.write(GenerateurByteCode.getInstance().getCible().toString());
     bw.close();
 	System.out.println("Done ("+dstFileName+")");
@@ -147,8 +145,8 @@ AXIOME ::= PROGRAMME {:
     :};
 
 PROGRAMME ::= ENTETE DECLA debutprg CORPS finprg {:
-    System.out.println("FIN");
-    System.out.println("Pile status : " + pileArbres.size());
+    //System.out.println("FIN");
+    //System.out.println("Pile status : " + pileArbres.size());
 :};
 
 ENTETE ::= programme ident pointvirgule 
@@ -167,7 +165,6 @@ DECLAVAR ::= TYPE:type LIDENT:list pointvirgule
 {: 
     // Ajout des variables dans la table des symboles.
     for (String id : list) {
-        System.out.println("id : " + id);
         Ident i = new Ident(id);            // Création du nouvel identifiant.
         Entree e = new EntreeEntBool(i);    // Ajout d'une entrée.
         Symbole s = new SymboleEntBool(2, lastType, valeurPile);
@@ -272,6 +269,12 @@ EXPR ::= EXPR OPEBIN:op EXPR
             break;
         case "-":
             pileArbres.push(new Soustraction(g, d, 1));
+            break;
+        case "*":
+            pileArbres.push(new Produit(g, d, 1));
+            break;
+        case "/":
+            pileArbres.push(new Division(g, d, 1));
             break;
         case "==":
             pileArbres.push(new Egal(g, d, 1));
