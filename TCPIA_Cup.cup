@@ -36,6 +36,8 @@ parser code {:
 
     public Bloc bloc;
 
+    public int valeurPile = 1;
+
     public void afficheTDS() {
         System.out.println("Affichage de TDS : ");
         System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
@@ -169,8 +171,8 @@ DECLAVAR ::= TYPE:type LIDENT:list pointvirgule
         System.out.println("id : " + id);
         Ident i = new Ident(id);            // Création du nouvel identifiant.
         Entree e = new EntreeEntBool(i);    // Ajout d'une entrée.
-        Symbole s = new SymboleEntBool(2, lastType);
-
+        Symbole s = new SymboleEntBool(2, lastType, valeurPile);
+        valeurPile++;
         //System.out.println("i : " + id);
         System.out.println("Lasttype : " + lastType);
 
