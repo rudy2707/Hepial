@@ -57,7 +57,7 @@ public class AnalyseurSemantique implements Visiteur {
         }
         else {
             // Type inconnu.
-            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (inconnu)");
+            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.gauche() + " (inconnu)");
         }
 
         b.droit().accepter(this);
@@ -70,6 +70,10 @@ public class AnalyseurSemantique implements Visiteur {
         else {
             // Type inconnu.
             Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (inconnu)");
+        }
+        // Vérifie si on a bien les mêmes types des deux côtés.
+        if (b.gauche().getType() != b.droit().getType()) {
+            Erreur.getInstance().ajouter("Opération : les opérandes n'ont pas le même type.");
         }
     }
 
@@ -182,6 +186,8 @@ public class AnalyseurSemantique implements Visiteur {
     }
 
     public Object visiter(Nombre n) {
+        // Set le type du nombre pour la comparaison à venir.
+        n.setType(TypeEntier.getInstance());
         return null;
     }
 
@@ -204,6 +210,7 @@ public class AnalyseurSemantique implements Visiteur {
     }
 
     public Object visiter(Ecrire e) {
+        // TODO : Check l'écriture.
         return null;
     }
 

@@ -42,6 +42,10 @@ public class Nombre extends Expression {
         return TypeEntier.getInstance();
     }
 
+    public void setType(Type t) {
+        this.type = t;
+    }
+
     public Object accepter(Visiteur v) {
         return v.visiter(this);
     }
