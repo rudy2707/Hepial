@@ -35,6 +35,12 @@ public class TDS {
 
     public Stack<HashMap<Entree, Symbole>> stack;
 
+    // Valeur actuelle de la pile.
+    // On doit pouvoir mettre des identifiants dans la pile, mais il ne faut
+    // pas écraser des autres valeurs donc on incrément cette variable à chaque fois
+    // que l'on affecte une valeur de pile à un identifiant.
+    int valeurPileActuelle = 0;
+
     /**
      *  Constructeur
      *
@@ -68,38 +74,15 @@ public class TDS {
      *  Identification d'une entrée.
      */
     public Symbole identifier(Entree e) {
-        //for (Map.Entry entry : this.bloc.entrySet()) {
-        //    String s = (Entree)entry.getKey().ident();
-        //    String s2 = e.ident();
-        //    if (s.equals(s2)) {
-        //        System.out.println("FOUND");
-        //        return (Symbole)entry.getValue();
-        //    }
-        //}
         return null;
         //return this.bloc.get(e);
     }
 
+    /**
+     * Identification d'une entrée.
+     */
     public Symbole getSymbole(Entree e) {
-        System.out.println("Affichage de TDS : ");
-        System.out.println("Taille de TDS : " + TDS.getInstance().bloc.size());
-
-        for (Map.Entry entry : TDS.getInstance().bloc.entrySet()) {
-            System.out.println("Ident : " + entry.getKey() + " / Type : " + entry.getValue());
-            Entree n = (Entree)entry.getKey();
-            System.out.println("e 2 :" + n);
-            Symbole s = (Symbole)entry.getValue();
-            System.out.println("s 2 :" + s);
-        }
-        System.out.println("e tds :" + e);
-        System.out.println("e tds :" + e.ident());
-        System.out.println("e tds :" + bloc.containsKey(e));
         Symbole s = bloc.get(e);
-        System.out.println("Symbole :" + s);
-        //if (s == null)
-        //    return null;
-        //else
-        //    return s;
         return s;
     }
 
