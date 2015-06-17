@@ -53,10 +53,13 @@ public class GenerateurByteCode implements Visiteur {
     public Object visiter(Nombre n) {
         System.out.println("Byte : Nombre : " + n);
         int valeur = n.valeur();
-        if (valeur <= 5)
+        /*if (valeur <= 5)
             cible.append(" iconst_" + valeur + "\n");
         else
             cible.append(" bipush " + valeur + "\n");
+        */
+        cible.append("ldc " + valeur);
+        cible.append("istore " n.getPile());
         return null;
     }
 
@@ -74,6 +77,12 @@ public class GenerateurByteCode implements Visiteur {
         System.out.println("Byte : Addition : " + a);
         a.gauche().accepter(this);
         a.droit().accepter(this);
+
+        cible.append("iload " + a.gauche().getPile());
+        cible.append("iload " + a.droit().getPile());
+        cible.append("iadd");
+        //cible.append("istore " + );
+
         return null;
     }
 
@@ -139,15 +148,15 @@ public class GenerateurByteCode implements Visiteur {
     public Object visiter(Bloc b) {
         System.out.println("Byte : Bloc : " + b);
 
-		cible.append(".class public Main\n");
+		/*cible.append(".class public Main\n");
 		cible.append(".super java/lang/Object\n");
 
 		cible.append(".method public <init>()V\n");
-		cible.append("	aload_0\n");
+		cible.append("	aload_0\n; push this\n");
 		cible.append("	invokespecial java/lang/Object/<init>()V\n");
 		cible.append("	return\n");
 		cible.append(".end method\n");
-
+        
 		cible.append(".method public static main([Ljava/lang/String;)V\n");
 		cible.append("	.limit stack " + TDS.getInstance().bloc.size());
         cible.append("\n");
@@ -160,6 +169,41 @@ public class GenerateurByteCode implements Visiteur {
         }
 		cible.append("	return\n");
 		cible.append(".end method\n");
+        */
+        cible.append(".class public Main\n");
+        cible.append(".super java/lang/Object\n");
+
+        //; default constructor
+        cible.append(".method public <init>()V\n");
+        cible.append("aload_0 ; push this\n");
+        cible.append("invokespecial java/lang/Object/<init>()V ; call super\n");
+        cible.append("return\n");
+        cible.append(".end method\n");
+
+        //; declare a new method
+        cible.append(".method public static main([Ljava/lang/String;)V\n");
+
+        //; allocate stack big enough to hold 2 items
+        cible.append(".limit stack 4\n");
+        cible.append(".limit locals 4\n");
+   
+        //; push java.lang.System.out (type PrintStream)
+        // cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
+   
+        //; push string to be printed
+        //cible.append("ldc \"J'men fous\"\n");
+        cible.append("ldc 9\n");
+        cible.append("ldc 5\n");
+        cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
+        
+        cible.append("iadd\n");
+        //; invoke println
+        cible.append("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n");
+   
+        //; terminate main
+        cible.append("return\n");
+
+        cible.append(".end method\n");
         return null;
     }
 
