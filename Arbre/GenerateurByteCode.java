@@ -41,7 +41,6 @@ public class GenerateurByteCode implements Visiteur {
     }
 
     public void genereCode(ArbreAbstrait a) {
-        System.out.println("Byte : genereCode : " + a);
         a.accepter(this);
     }
 
@@ -52,7 +51,6 @@ public class GenerateurByteCode implements Visiteur {
     // Méthodes visiter() des différents éléments.
     // Nombre
     public Object visiter(Nombre n) {
-        System.out.println("Byte : Nombre : " + n);
         int valeur = n.valeur();
         cible.append("ldc " + valeur + "\n");
         return null;
@@ -60,7 +58,6 @@ public class GenerateurByteCode implements Visiteur {
 
     // Binaire
     public Object visiter(Binaire b) {
-        System.out.println("Byte : Binaire : " + b);
         b.gauche().accepter(this);
         b.droit().accepter(this);
         return null;
@@ -78,7 +75,6 @@ public class GenerateurByteCode implements Visiteur {
     }
 
     public Object visiter(Soustraction a) {
-        System.out.println("Byte : Soustraction : " + a);
         a.gauche().accepter(this);
         a.droit().accepter(this);
 
@@ -88,7 +84,6 @@ public class GenerateurByteCode implements Visiteur {
     }
 
     public Object visiter(Produit a) {
-        System.out.println("Byte : Produit : " + a);
         a.gauche().accepter(this);
         a.droit().accepter(this);
 
@@ -96,8 +91,8 @@ public class GenerateurByteCode implements Visiteur {
 
         return null;
     }
+
     public Object visiter(Division a) {
-        System.out.println("Byte : Division : " + a);
         a.gauche().accepter(this);
         a.droit().accepter(this);
 
