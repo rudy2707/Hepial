@@ -39,16 +39,38 @@ public class AnalyseurSemantique implements Visiteur {
         return instance;
     }
 
+    /**
+     * Fonction pour vérifier les operandes d'une opération.
+     * Cette fonction est appellé pour tous les éléments héritant de la classe 'Binaire'.
+     */
     public void checkBinaire(Binaire b) {
-        // Vérifie les types de l'addition.
+        // Vérifie les types d'une opération binaire et si la variable existe.
+        System.out.println("--------------------------------Gauche : " + b.gauche());
         b.gauche().accepter(this);
-        if (!b.gauche().getType().estConforme(TypeEntier.getInstance())) {
-            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.gauche() + " (" + b.gauche().getType() + ")");
+        System.out.println("Type check : " + b.gauche().getType());
+        if (b.gauche().getType() != null) {
+            if (!b.gauche().getType().estConforme(TypeEntier.getInstance())) {
+                // Type non conforme.
+                Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.gauche() + " (" + b.gauche().getType() + ")");
+            }
+        }
+        else {
+            // Type inconnu.
+            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (inconnu)");
         }
 
+        System.out.println("--------------------------------Droit : " + b.droit());
+        System.out.println("Type check : " + b.gauche().getType());
         b.droit().accepter(this);
-        if (!b.droit().getType().estConforme(TypeEntier.getInstance())) {
-            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (" + b.droit().getType() + ")");
+        if (b.droit().getType() != null) {
+            if (!b.droit().getType().estConforme(TypeEntier.getInstance())) {
+                // Type non conforme.
+                Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (" + b.droit().getType() + ")");
+            }
+        }
+        else {
+            // Type inconnu.
+            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (inconnu)");
         }
     }
 
@@ -143,7 +165,9 @@ public class AnalyseurSemantique implements Visiteur {
 
 
     public Object visiter(Idf i) {
+        System.out.println("i : " + i);
         Symbole s = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(i.getName())));
+        System.out.println("Symbole a: " + s);
         if (s == null) {    // Pas de type, erreur.
             Erreur.getInstance().ajouter("Erreur : l'identifiant " + i + " n'existe pas.");
             Erreur.getInstance().ajouter("Erreur, pas de type récupéré.");
@@ -151,6 +175,8 @@ public class AnalyseurSemantique implements Visiteur {
         else {
             // On attribut le type à l'identifiant pour qu'il soit récupérable
             // depuis l'affectation ainsi que les autres méthodes visiter().
+
+            System.out.println("Value symbole : " + s);
             i.setType(s.getType());
         }
 
