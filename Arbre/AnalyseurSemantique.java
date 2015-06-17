@@ -27,6 +27,9 @@ public class AnalyseurSemantique implements Visiteur {
     // Singleton
     private static AnalyseurSemantique instance = null;;
 
+    // Valeur actuelle de la pile.
+    private int valeurPileActuelle = 0;
+
     public AnalyseurSemantique() {
 
     }
@@ -165,7 +168,6 @@ public class AnalyseurSemantique implements Visiteur {
 
 
     public Object visiter(Idf i) {
-        System.out.println("i : " + i);
         Symbole s = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(i.getName())));
         System.out.println("Symbole a: " + s);
         if (s == null) {    // Pas de type, erreur.
@@ -175,9 +177,13 @@ public class AnalyseurSemantique implements Visiteur {
         else {
             // On attribut le type à l'identifiant pour qu'il soit récupérable
             // depuis l'affectation ainsi que les autres méthodes visiter().
-
-            System.out.println("Value symbole : " + s);
             i.setType(s.getType());
+            // On attribut une position dans la pile à la valeur pour pouvoir
+            // la retrouver plus tard.
+            i.setPile(this.valeurPileActuelle);
+            // On incrément le numéro courant de la pile pour ne pas
+            // réécrire sur des données.
+            this.valeurPileActuelle++;
         }
 
         return null;
