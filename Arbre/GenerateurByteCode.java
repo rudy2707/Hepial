@@ -77,14 +77,32 @@ public class GenerateurByteCode implements Visiteur {
         return null;
     }
 
-    public Object visiter(Soustraction s) {
+    public Object visiter(Soustraction a) {
+        System.out.println("Byte : Soustraction : " + a);
+        a.gauche().accepter(this);
+        a.droit().accepter(this);
+
+        cible.append("isub\n");
+
         return null;
     }
 
-    public Object visiter(Produit p) {
+    public Object visiter(Produit a) {
+        System.out.println("Byte : Produit : " + a);
+        a.gauche().accepter(this);
+        a.droit().accepter(this);
+
+        cible.append("imul\n");
+
         return null;
     }
-    public Object visiter(Division d) {
+    public Object visiter(Division a) {
+        System.out.println("Byte : Division : " + a);
+        a.gauche().accepter(this);
+        a.droit().accepter(this);
+
+        cible.append("idiv\n");
+
         return null;
     }
 
