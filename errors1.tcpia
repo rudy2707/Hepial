@@ -5,7 +5,7 @@ entier impot;
 
 debutprg
 
-argent = 100 + 100;
+argent = isrich;
 ecrire argent ;
 
 impot = argent / 2 ;

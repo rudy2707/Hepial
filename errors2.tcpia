@@ -2,10 +2,11 @@ programme test ;
 
 entier argent;
 entier impot;
+booleen isrich;
 
 debutprg
 
-argent = 100 + 100;
+argent = argent + isrich;
 ecrire argent ;
 
 impot = argent / 2 ;
