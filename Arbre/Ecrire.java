@@ -23,8 +23,9 @@ import java.util.*;
 public class Ecrire extends Instruction {
     private Expression texte;
 
-    public Ecrire(Integer ligne) {
+    public Ecrire(Expression t, Integer ligne) {
         super(ligne);
+        this.texte = t;
     }
 
     public Expression getTexte() {

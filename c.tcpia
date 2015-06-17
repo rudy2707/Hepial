@@ -7,5 +7,6 @@ debutprg
 
 ac = 4 + 4 ;
 ab = ac ; 
+ecrire ab;
 
 finprg

@@ -222,7 +222,10 @@ CORPS ::= INSTR
     //pileArbres.push(b);
 :}  | INSTR CORPS; // La partie | CORPS sert à pouvoir répéter INSTR (INSTR*)
 
-INSTR ::= AFFECTATION | ECRIRE | LIRE | CONDITION
+INSTR ::= AFFECTATION | ECRIRE 
+    {:
+    :}
+        | LIRE | CONDITION
 {: 
     System.out.println("NANANANANANAN");
 :}
@@ -238,7 +241,12 @@ LIRE ::= lire ident pointvirgule
 :};
 
 ECRIRE ::= ecrire EXPR pointvirgule
-	    | ecrire constantechaine pointvirgule
+{:
+        System.out.println("ECRITURE");   
+        Ecrire e = new Ecrire((Expression)(pileArbres.pop()), 1);
+        bloc.add(e);
+:}
+	    | ecrire:e constantechaine:s pointvirgule
 ;
 
 AFFECTATION ::= ACCES affectation EXPR pointvirgule
