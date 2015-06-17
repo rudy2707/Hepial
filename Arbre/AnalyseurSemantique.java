@@ -39,6 +39,20 @@ public class AnalyseurSemantique implements Visiteur {
         return instance;
     }
 
+    public void checkBinaire(Binaire b) {
+        // Vérifie les types de l'addition.
+        b.gauche().accepter(this);
+        if (!b.gauche().getType().estConforme(TypeEntier.getInstance())) {
+            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.gauche() + " (" + b.gauche().getType() + ")");
+        }
+
+        b.droit().accepter(this);
+        if (!b.droit().getType().estConforme(TypeEntier.getInstance())) {
+            Erreur.getInstance().ajouter("Opération : erreur de type avec la variable " + b.droit() + " (" + b.droit().getType() + ")");
+        }
+    }
+
+
     public void analyse(ArbreAbstrait arbre) {
         arbre.accepter(this);
     }
@@ -46,64 +60,53 @@ public class AnalyseurSemantique implements Visiteur {
     // Méthodes visiter() des différents éléments.
     // Opérations
     public Object visiter(Addition a) {
-        System.out.println("---------------------------Analyseur Visiter addition.");
-        // Vérifie les types de l'addition.
-        a.gauche().accepter(this);
-        if (!a.gauche().getType().estConforme(TypeEntier.getInstance())) {
-            System.out.println("---------------------------Erreur de type.");
-        }
-
-        a.droit().accepter(this);
-        if (!a.droit().getType().estConforme(TypeEntier.getInstance())) {
-            System.out.println("---------------------------Erreur de type.");
-        }
+        checkBinaire(a);
         return null;
     }
 
     public Object visiter(Soustraction s) {
-        // Vérifie les types de la soustraction.
-        s.gauche().accepter(this);
-        if (!s.gauche().getType().estConforme(TypeEntier.getInstance())) {
-            // TODO : Error
-        }
-
-        s.droit().accepter(this);
-        if (!s.droit().getType().estConforme(TypeEntier.getInstance())) {
-            // TODO : Error
-        }
+        checkBinaire(s);
         return null;
     }
 
     public Object visiter(Produit p) {
+        checkBinaire(p);
         return null;
     }
 
     public Object visiter(Division d) {
+        checkBinaire(d);
         return null;
     }
 
     // Comparaison
     public Object visiter(Egal e) {
+        checkBinaire(e);
         return null;
     }
 
     public Object visiter(Inferieur e) {
+        checkBinaire(e);
         return null;
     }
 
     public Object visiter(InfEgal e) {
+        checkBinaire(e);
         return null;
     }
 
     public Object visiter(Superieur e) {
+        checkBinaire(e);
         return null;
     }
 
     public Object visiter(SupEgal e) {
+        checkBinaire(e);
         return null;
     }
 
     public Object visiter(Different e) {
+        checkBinaire(e);
         return null;
     }
 
@@ -192,6 +195,6 @@ public class AnalyseurSemantique implements Visiteur {
         return null;
     }
 
-    // TODO : Condition, Pour, Appel de fonction, Bloc, ...
+    // TODO : Condition, Pour, Appel de fonction,  ...
 
 }
