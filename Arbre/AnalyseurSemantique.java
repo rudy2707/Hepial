@@ -146,8 +146,9 @@ public class AnalyseurSemantique implements Visiteur {
             System.out.println("Erreur, pas de type récupéré.");
         }
         else {
-            // Test le type.
-            System.out.println(s);
+            // On attribut le type à l'identifiant pour qu'il soit récupérable
+            // depuis l'affectation ainsi que les autres méthodes visiter().
+            i.setType(s.getType());
         }
 
         return null;
