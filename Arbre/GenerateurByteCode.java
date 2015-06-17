@@ -126,7 +126,7 @@ public class GenerateurByteCode implements Visiteur {
         // Code cible pour la source.
         a.source().accepter(this);
         // Code cible pour l'affectation.
-        cible.append(" istore \n");
+        cible.append("istore " + a.destination().getPile());
 
         return null;
     }
@@ -136,7 +136,7 @@ public class GenerateurByteCode implements Visiteur {
     }
 
     public Object visiter(Idf i) {
-        cible.append(" iload\n");
+        cible.append("iload " + i.getPile() + "\n");
 
         return null;
     }
