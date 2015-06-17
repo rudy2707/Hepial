@@ -126,10 +126,6 @@ public class GenerateurByteCode implements Visiteur {
         return null;
     }
 
-    public Object visiter(Ident i) {
-        return null;
-    }
-
     public Object visiter(Idf i) {
         cible.append(" iload\n");
 

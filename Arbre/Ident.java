@@ -4,6 +4,7 @@
  *       Filename:  Ident.java
  *
  *    Description:  Stockage des identifiants.
+ *                  Utilisé pour la table des symboles.
  *
  *        Version:  1.0
  *        Created:  04/28/2015 07:24:36 PM
@@ -31,9 +32,5 @@ public class Ident {
 
     public String toString() {
         return this.name;
-    }
-
-    public Object accept(Visiteur v) {
-        return v.visiter(this);
     }
 }

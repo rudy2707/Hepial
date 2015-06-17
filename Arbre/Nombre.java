@@ -24,6 +24,8 @@ public class Nombre extends Expression {
 
 	protected int valeur;
     protected Type type;
+    // Position dans la pile pour la génération du Bytecode.
+    protected int valeurPile;
 
 
 	public Nombre (Integer val, int lig) {
@@ -43,9 +45,16 @@ public class Nombre extends Expression {
     public Object accepter(Visiteur v) {
         return v.visiter(this);
     }
-	
+
     public String toString() {
 	return String.valueOf(this.valeur);
     }
 
+    public void setPile(int val) {
+        this.valeurPile = val;
+    }
+
+    public int getPile() {
+        return this.valeurPile;
+    }
 }

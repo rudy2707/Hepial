@@ -183,20 +183,6 @@ public class AnalyseurSemantique implements Visiteur {
         return null;
     }
 
-    public Object visiter(Ident i) {
-        //System.out.println("Ident visiter");
-        //Symbole s = TDS.getInstance().getSymbole(i.getName());
-        //if (s == null) {    // Pas de type, erreur.
-        //    System.out.println("Erreur, pas de type récupéré.");
-        //}
-        //else {
-        //    // Test le type.
-        //    System.out.println(s);
-        //}
-
-        return null;
-    }
-
     public Object visiter(Nombre n) {
         return null;
     }

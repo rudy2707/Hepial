@@ -3,7 +3,7 @@
  *
  *       Filename:  Idf.java
  *
- *    Description:  Idf
+ *    Description:  Idf utilisé pour l'arbre abstrait.
  *
  *        Version:  1.0
  *        Created:  05/05/2015 07:24:36 PM
@@ -23,21 +23,17 @@ import java.util.*;
 public class Idf extends Expression {
 	protected String nom;
 	protected Type type;
+    // Position dans la pile pour la génération du Bytecode.
+    protected int valeurPile;
+
 
 	public Idf(String nom, int lig) {
         super(lig);
 		this.nom = nom;
-        //System.out.println("symb idf avant");
-        ////System.out.println(TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType());
-        //EntreeEntBool e = new EntreeEntBool(new Ident(nom));
-        //System.out.println("SYMBOLE idf avant");
-        //System.out.println("Entree : " + e);
-        //this.type = TDS.getInstance().getSymbole(new EntreeEntBool(new Ident(nom))).getType();
-        //System.out.println("symb idf apres");
+        this.valeurPile = -1;
 	}
 
     public Type getType() {
-        System.out.println("IDF Type : " + this.type);
         return this.type;
     }
 
@@ -55,6 +51,14 @@ public class Idf extends Expression {
 
     public String toString() {
         return this.nom;
+    }
+
+    public void setPile(int val) {
+        this.valeurPile = val;
+    }
+
+    public int getPile() {
+        return this.valeurPile;
     }
 
 }
