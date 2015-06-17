@@ -207,6 +207,10 @@ public class AnalyseurSemantique implements Visiteur {
         return null;
     }
 
+    public Object visiter(Ecrire e) {
+        return null;
+    }
+
     // TODO : Condition, Pour, Appel de fonction,  ...
 
 }

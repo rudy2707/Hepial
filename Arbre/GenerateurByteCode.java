@@ -31,6 +31,7 @@ public class GenerateurByteCode implements Visiteur {
 
     private static GenerateurByteCode instance = null;
     private static StringBuilder cible = new StringBuilder();
+    public static int trucEcrire = 0;
 
     public static GenerateurByteCode getInstance() {
         if (instance == null) {
@@ -58,8 +59,8 @@ public class GenerateurByteCode implements Visiteur {
         else
             cible.append(" bipush " + valeur + "\n");
         */
-        cible.append("ldc " + valeur);
-        cible.append("istore " n.getPile());
+        cible.append("ldc " + valeur + "\n");
+        //cible.append("istore " + n.getPile());
         return null;
     }
 
@@ -78,9 +79,9 @@ public class GenerateurByteCode implements Visiteur {
         a.gauche().accepter(this);
         a.droit().accepter(this);
 
-        cible.append("iload " + a.gauche().getPile());
-        cible.append("iload " + a.droit().getPile());
-        cible.append("iadd");
+        //cible.append("iload " + ((Idf)a.gauche()).getPile());
+        //cible.append("iload " + ((Idf)a.droit()).getPile());
+        cible.append("iadd\n");
         //cible.append("istore " + );
 
         return null;
@@ -126,8 +127,8 @@ public class GenerateurByteCode implements Visiteur {
         // Code cible pour la source.
         a.source().accepter(this);
         // Code cible pour l'affectation.
-        cible.append("istore " + a.destination().getPile());
-
+        cible.append("istore " + ((Idf)a.dest()).getPile() + "\n");
+        trucEcrire = ((Idf)a.dest()).getPile();
         return null;
     }
 
@@ -141,31 +142,17 @@ public class GenerateurByteCode implements Visiteur {
         return null;
     }
 
+    public Object visiter(Ecrire e) {
+        cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
+        cible.append("iload " + trucEcrire + "\n");
+        //; invoke println
+        cible.append("invokevirtual java/io/PrintStream/println(I)V\n");
+        return null;
+    }
+
     public Object visiter(Bloc b) {
-        System.out.println("Byte : Bloc : " + b);
-
-		/*cible.append(".class public Main\n");
-		cible.append(".super java/lang/Object\n");
-
-		cible.append(".method public <init>()V\n");
-		cible.append("	aload_0\n; push this\n");
-		cible.append("	invokespecial java/lang/Object/<init>()V\n");
-		cible.append("	return\n");
-		cible.append(".end method\n");
-        
-		cible.append(".method public static main([Ljava/lang/String;)V\n");
-		cible.append("	.limit stack " + TDS.getInstance().bloc.size());
-        cible.append("\n");
-		cible.append("	.limit locals " + TDS.getInstance().bloc.size());
-        cible.append("\n");
-
-		//bloc.instructions().accept(this);
-        for (int i = 0; i < b.instr().size(); i++) {
-            b.instr().get(i).accepter(this);
-        }
-		cible.append("	return\n");
-		cible.append(".end method\n");
-        */
+        //System.out.println("Byte : Bloc : " + b);
+        // Header
         cible.append(".class public Main\n");
         cible.append(".super java/lang/Object\n");
 
@@ -179,23 +166,31 @@ public class GenerateurByteCode implements Visiteur {
         //; declare a new method
         cible.append(".method public static main([Ljava/lang/String;)V\n");
 
-        //; allocate stack big enough to hold 2 items
-        cible.append(".limit stack 4\n");
-        cible.append(".limit locals 4\n");
-   
+        //; allocate stack big enough to hold all items
+        cible.append(".limit stack 10\n");
+        cible.append(".limit locals 100\n");
+        
+        b.accepter(this);
+
         //; push java.lang.System.out (type PrintStream)
         // cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
    
         //; push string to be printed
         //cible.append("ldc \"J'men fous\"\n");
+        /*
         cible.append("ldc 9\n");
+        cible.append("istore 9\n");
         cible.append("ldc 5\n");
-        cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
-        
+        cible.append("istore 5\n");
+        cible.append("iload 9\n");
+        cible.append("iload 5\n");
         cible.append("iadd\n");
+        cible.append("istore 99\n");
+        cible.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
+        cible.append("iload 99\n");
         //; invoke println
-        cible.append("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n");
-   
+        cible.append("invokevirtual java/io/PrintStream/println(I)V\n");
+        */
         //; terminate main
         cible.append("return\n");
 

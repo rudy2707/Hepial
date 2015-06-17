@@ -52,7 +52,7 @@ public class Idf extends Expression {
     public String toString() {
         return this.nom;
     }
-
+    
     public void setPile(int val) {
         this.valeurPile = val;
     }
@@ -60,5 +60,5 @@ public class Idf extends Expression {
     public int getPile() {
         return this.valeurPile;
     }
-
+    
 }

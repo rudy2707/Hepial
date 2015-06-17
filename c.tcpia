@@ -1,12 +1,11 @@
 programme test ;
 
-booleen r;
-entier test2;
+entier ac;
 entier ab;
 
 debutprg
 
-test2 = ab ;
-ab = 4;
+ac = 4 + 4 ;
+ab = ac ;
 
 finprg
