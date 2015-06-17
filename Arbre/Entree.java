@@ -26,7 +26,6 @@ public class Entree {
 
     // Construire une entrée.
     public Entree(Ident ident){
-        System.out.println("Constructeur Entree, avec i = " + ident);
         this.ident = ident;
     }
 
