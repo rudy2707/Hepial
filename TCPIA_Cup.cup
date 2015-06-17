@@ -113,12 +113,6 @@ precedence left different, doubleegal, pluspetitegal, pluspetit, plusgrandegal, 
 AXIOME ::= PROGRAMME {:
     
     System.out.println("Pile status : " + pileArbres.size());
-    /* 
-       TODO : Faire la génération du bytecode.
-       Appeler la classe BytecodeGenerateur et lancer la création du code.
-       Le texte doit être écrit dans un bufferwrite pour pouvoir être 
-       créer du bytecode avec jasmin (makefile)
-    */
     Bloc root = (Bloc)pileArbres.peek();
     System.out.println("Table des symboles");
     afficheTDS();
